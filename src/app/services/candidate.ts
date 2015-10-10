@@ -10,9 +10,15 @@
             instance.party = (<IParty>this.$injector.get("party")).createInstance({ partyCode: options.data.partyCode });
             instance.name = options.data.name;
             instance.votes = options.data.votes;
-            instance.riding = options.riding;
+            instance.totalVotes = options.totalVotes;
             return instance;
         }
+
+        private _totalVotes: number;
+
+        public get totalVotes() { return this._totalVotes; }
+
+        public set totalVotes(value: number) { this._totalVotes = value; }
 
         private _name: string;
 
@@ -36,16 +42,11 @@
         public set votes(value: number) { this._votes = value; }
 
         public get percentageOfTotalVotes() {
-            var value: any = (this._votes / this.riding.totalVotes);
+            var value: any = (this._votes / this.totalVotes);
             var percentage: any = this.$filter('number')(value, 3);
             return (percentage * 100) + "%";
         }
 
-        private _riding: IRiding;
-
-        public get riding() { return this._riding; }
-
-        public set riding(value: IRiding) { this._riding = value; }
 
         private _party: IParty;
 
@@ -53,7 +54,6 @@
 
         public set party(value: IParty) { this._party = value; }
 
-        public get isWinner(): boolean { return this.riding.winningCandidate.name == this.name; }
 
     }
 

@@ -15,10 +15,9 @@ declare module ElectionCarousel {
         firstName: string;
         lastName: string;
         votes: number;
-        riding: IRiding;
         percentageOfTotalVotes: string;
-        isWinner: boolean;
         party: IParty;
+        totalVotes:number;
     }
 
     export interface IRiding {
@@ -40,6 +39,6 @@ declare module ElectionCarousel {
 
     export interface ICandidateInstanceOptions {
         data: any;
-        riding: IRiding;
+        totalVotes: number;
     }
 } 

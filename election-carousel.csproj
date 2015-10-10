@@ -83,6 +83,8 @@
     <Content Include="src\app\directives\appFooter\appFooter.html" />
     <Content Include="src\app\directives\appHeader\appHeader.html" />
     <Content Include="src\app\directives\riding\riding.html" />
+    <Content Include="src\app\electionCarousel.css" />
+    <Content Include="src\app\reset.css" />
     <Content Include="src\app\views\ridings.html" />
     <Content Include="Web.config" />
   </ItemGroup>

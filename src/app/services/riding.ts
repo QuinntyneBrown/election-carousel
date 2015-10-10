@@ -12,8 +12,10 @@
             
             for (var i = 0; i < options.data.results.length; i++) {
                 instance.totalVotes = instance.totalVotes + options.data.results[i].votes;
+            }
 
-                var candidate = this.candidate.createInstance({ riding: instance, data: options.data.results[i] });
+            for (var i = 0; i < options.data.results.length; i++) {
+                var candidate = this.candidate.createInstance({ totalVotes: instance.totalVotes, data: options.data.results[i] });
 
                 var candidates = instance.candidates;
                 candidates.push(candidate);
@@ -21,7 +23,6 @@
 
                 if (options.data.results[i].isElected)
                     instance.winningCandidate = candidate;
-
             }
 
             return instance;

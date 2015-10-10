@@ -95,10 +95,16 @@ var ElectionCarousel;
                 instance.party = _this.$injector.get("party").createInstance({ partyCode: options.data.partyCode });
                 instance.name = options.data.name;
                 instance.votes = options.data.votes;
-                instance.riding = options.riding;
+                instance.totalVotes = options.totalVotes;
                 return instance;
             };
         }
+        Object.defineProperty(Candidate.prototype, "totalVotes", {
+            get: function () { return this._totalVotes; },
+            set: function (value) { this._totalVotes = value; },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(Candidate.prototype, "name", {
             get: function () { return this._name; },
             set: function (value) { this._name = value; },
@@ -130,27 +136,16 @@ var ElectionCarousel;
         });
         Object.defineProperty(Candidate.prototype, "percentageOfTotalVotes", {
             get: function () {
-                var value = (this._votes / this.riding.totalVotes);
+                var value = (this._votes / this.totalVotes);
                 var percentage = this.$filter('number')(value, 3);
                 return (percentage * 100) + "%";
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Candidate.prototype, "riding", {
-            get: function () { return this._riding; },
-            set: function (value) { this._riding = value; },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(Candidate.prototype, "party", {
             get: function () { return this._party; },
             set: function (value) { this._party = value; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Candidate.prototype, "isWinner", {
-            get: function () { return this.riding.winningCandidate.name == this.name; },
             enumerable: true,
             configurable: true
         });
@@ -228,7 +223,9 @@ var ElectionCarousel;
                 instance.name = options.data.name;
                 for (var i = 0; i < options.data.results.length; i++) {
                     instance.totalVotes = instance.totalVotes + options.data.results[i].votes;
-                    var candidate = _this.candidate.createInstance({ riding: instance, data: options.data.results[i] });
+                }
+                for (var i = 0; i < options.data.results.length; i++) {
+                    var candidate = _this.candidate.createInstance({ totalVotes: instance.totalVotes, data: options.data.results[i] });
                     var candidates = instance.candidates;
                     candidates.push(candidate);
                     instance.candidates = candidates;
@@ -332,6 +329,10 @@ var ElectionCarousel;
 
 //# sourceMappingURL=appHeader.js.map
 
+
+
+//# sourceMappingURL=carousel.js.map
+
 var ElectionCarousel;
 (function (ElectionCarousel) {
     var Directives;
@@ -355,10 +356,6 @@ var ElectionCarousel;
 
 //# sourceMappingURL=appFooter.js.map
 
-
-
-//# sourceMappingURL=carousel.js.map
-
 var ElectionCarousel;
 (function (ElectionCarousel) {
     var Directives;
@@ -367,6 +364,9 @@ var ElectionCarousel;
             function Riding() {
                 this.restrict = "E";
                 this.replace = true;
+                this.scope = {
+                    riding: "="
+                };
                 this.templateUrl = "src/app/directives/riding/riding.html";
                 this.link = function (scope, element, attributes) {
                 };
@@ -377,6 +377,7 @@ var ElectionCarousel;
             return Riding;
         })();
         Directives.Riding = Riding;
+        angular.module("election-carousel").directive("riding", [Riding.createInstance]);
     })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
 })(ElectionCarousel || (ElectionCarousel = {}));
 

@@ -27,7 +27,7 @@ module ElectionCarousel {
             expect(instance.winningCandidate.name).toEqual("Stephen McNeil");
             expect(instance.winningCandidate.party.colorCode).toEqual("#D71923");
             expect(instance.winningCandidate.votes).toEqual(7709);
-            expect(instance.winningCandidate.riding.totalVotes).toEqual(10160);
+            expect(instance.winningCandidate.totalVotes).toEqual(10160);
             expect(instance.winningCandidate.percentageOfTotalVotes).toEqual("75.9%");
             expect(instance.candidates.length).toEqual(4);
             expect(instance.id).toEqual(1);
