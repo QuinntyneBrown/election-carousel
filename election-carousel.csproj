@@ -82,7 +82,7 @@
     <Content Include="results-2011.js" />
     <Content Include="src\app\directives\appFooter\appFooter.html" />
     <Content Include="src\app\directives\appHeader\appHeader.html" />
-    <Content Include="src\app\directives\riding\riding.html" />
+    <Content Include="src\app\directives\candidateList\candidateList.html" />
     <Content Include="src\app\electionCarousel.css" />
     <Content Include="src\app\reset.css" />
     <Content Include="src\app\views\ridings.html" />
@@ -95,14 +95,15 @@
     <TypeScriptCompile Include="src\app\controllers\ridingsController.ts" />
     <TypeScriptCompile Include="src\app\directives\appFooter\appFooter.ts" />
     <TypeScriptCompile Include="src\app\directives\appHeader\appHeader.ts" />
+    <TypeScriptCompile Include="src\app\directives\candidateList\candidateList.ts" />
     <TypeScriptCompile Include="src\app\directives\carousel\carousel.ts" />
-    <TypeScriptCompile Include="src\app\directives\riding\riding.ts" />
     <TypeScriptCompile Include="src\app\electionCarousel.module.ts" />
     <TypeScriptCompile Include="src\app\function\getHtml.ts" />
     <TypeScriptCompile Include="src\app\function\translateX.ts" />
     <TypeScriptCompile Include="src\app\services\candidate.ts" />
     <TypeScriptCompile Include="src\app\services\container.ts" />
     <TypeScriptCompile Include="src\app\services\party.ts" />
+    <TypeScriptCompile Include="src\app\services\renderedNodes.ts" />
     <TypeScriptCompile Include="src\app\services\renderer.ts" />
     <TypeScriptCompile Include="src\app\services\riding.ts" />
     <TypeScriptCompile Include="src\app\services\ridingsDataService.ts" />

@@ -8,7 +8,7 @@ module ElectionCarousel {
         constructor() { }
 
         public createInstance = (options: IContainerInstanceOptions) => {
-            var instance = new ViewPort();
+            var instance = new Container();
             var container = angular.element("<div class='container'></div>");
             container.css("height", options.height);
             container.css("width", options.width);
@@ -25,5 +25,5 @@ module ElectionCarousel {
         public set augmentedJQuery(value: ng.IAugmentedJQuery) { this._augmentedJQuery = value; }
     }
 
-    angular.module("election-carousel").service("container", [ViewPort]);
+    angular.module("election-carousel").service("container", [Container]);
 } 

@@ -203,7 +203,7 @@ var ElectionCarousel;
     var Container = (function () {
         function Container() {
             this.createInstance = function (options) {
-                var instance = new ElectionCarousel.ViewPort();
+                var instance = new Container();
                 var container = angular.element("<div class='container'></div>");
                 container.css("height", options.height);
                 container.css("width", options.width);
@@ -222,7 +222,7 @@ var ElectionCarousel;
         return Container;
     })();
     ElectionCarousel.Container = Container;
-    angular.module("election-carousel").service("container", [ElectionCarousel.ViewPort]);
+    angular.module("election-carousel").service("container", [Container]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=container.js.map
@@ -284,21 +284,73 @@ var ElectionCarousel;
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
-    var Renderer = (function () {
-        function Renderer($injector) {
-            var _this = this;
-            this.$injector = $injector;
+    var RenderedNodes = (function () {
+        function RenderedNodes() {
             this.createInstance = function (options) {
-                var instance = new Renderer(_this.$injector);
+                var instance = new RenderedNodes();
+                instance.container = options.container;
+                return instance;
+            };
+        }
+        return RenderedNodes;
+    })();
+    ElectionCarousel.RenderedNodes = RenderedNodes;
+    angular.module("election-carousel").service("renderedNodes", [RenderedNodes]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=renderedNodes.js.map
+
+/// <reference path="../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var Renderer = (function () {
+        function Renderer($compile, $injector, $timeout) {
+            var _this = this;
+            this.$compile = $compile;
+            this.$injector = $injector;
+            this.$timeout = $timeout;
+            this.createInstance = function (options) {
+                var instance = new Renderer(_this.$compile, _this.$injector, _this.$timeout);
+                instance.template = options.template;
+                instance.items = options.items;
+                instance.itemName = options.itemName;
+                instance.scope = options.scope;
+                instance.parentElement = options.parentElement;
+                instance.viewPort = _this.$injector.get("viewPort").createInstance({
+                    height: Number(options.attributes["carouselHeight"]),
+                    width: Number(options.attributes["carouselWidth"]),
+                    parentElement: options.parentElement
+                });
+                instance.container = _this.$injector.get("container").createInstance({
+                    height: Number(options.attributes["carouselHeight"]),
+                    width: Number(options.attributes["carouselWidth"]) * options.items.length,
+                    parentElement: instance.viewPort.augmentedJQuery
+                });
                 return instance;
             };
             this.render = function (options) {
+                if (!_this.hasRendered)
+                    _this.initialRender();
             };
+            this.initialRender = function () {
+                var fragment = document.createDocumentFragment();
+                for (var i = 0; i < _this.items.length; i++) {
+                    var childScope = _this.scope.$new(true);
+                    childScope[_this.itemName] = _this.items[i];
+                    childScope.$$index = i;
+                    var itemContent = _this.$compile(angular.element(_this.template))(childScope);
+                    fragment.appendChild(itemContent[0]);
+                }
+                _this.container.augmentedJQuery[0].appendChild(fragment);
+                _this.hasRendered = true;
+            };
+            this.hasRendered = false;
         }
         return Renderer;
     })();
     ElectionCarousel.Renderer = Renderer;
-    angular.module("election-carousel").service("renderer", ["$injector", Renderer]);
+    angular.module("election-carousel").service("renderer", ["$compile", "$injector", "$timeout", Renderer]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=renderer.js.map
@@ -434,24 +486,28 @@ var ElectionCarousel;
 (function (ElectionCarousel) {
     var Directives;
     (function (Directives) {
-        var AppFooter = (function () {
-            function AppFooter() {
+        var CandidateList = (function () {
+            function CandidateList() {
                 this.restrict = "E";
                 this.replace = true;
-                this.templateUrl = "src/app/directives/appFooter/appFooter.html";
+                this.scope = {
+                    candidates: "="
+                };
+                this.templateUrl = "src/app/directives/candidateList/candidateList.html";
                 this.link = function (scope, element, attributes) {
                 };
             }
-            AppFooter.createInstance = function () {
-                return new AppFooter();
+            CandidateList.createInstance = function () {
+                return new CandidateList();
             };
-            return AppFooter;
+            return CandidateList;
         })();
-        Directives.AppFooter = AppFooter;
+        Directives.CandidateList = CandidateList;
+        angular.module("election-carousel").directive("candidateList", [CandidateList.createInstance]);
     })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
 })(ElectionCarousel || (ElectionCarousel = {}));
 
-//# sourceMappingURL=appFooter.js.map
+//# sourceMappingURL=candidateList.js.map
 
 var ElectionCarousel;
 (function (ElectionCarousel) {
@@ -555,25 +611,21 @@ var ElectionCarousel;
 (function (ElectionCarousel) {
     var Directives;
     (function (Directives) {
-        var Riding = (function () {
-            function Riding() {
+        var AppFooter = (function () {
+            function AppFooter() {
                 this.restrict = "E";
                 this.replace = true;
-                this.scope = {
-                    riding: "="
-                };
-                this.templateUrl = "src/app/directives/riding/riding.html";
+                this.templateUrl = "src/app/directives/appFooter/appFooter.html";
                 this.link = function (scope, element, attributes) {
                 };
             }
-            Riding.createInstance = function () {
-                return new Riding();
+            AppFooter.createInstance = function () {
+                return new AppFooter();
             };
-            return Riding;
+            return AppFooter;
         })();
-        Directives.Riding = Riding;
-        angular.module("election-carousel").directive("riding", [Riding.createInstance]);
+        Directives.AppFooter = AppFooter;
     })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
 })(ElectionCarousel || (ElectionCarousel = {}));
 
-//# sourceMappingURL=riding.js.map
+//# sourceMappingURL=appFooter.js.map
