@@ -98,11 +98,16 @@
     <TypeScriptCompile Include="src\app\directives\carousel\carousel.ts" />
     <TypeScriptCompile Include="src\app\directives\riding\riding.ts" />
     <TypeScriptCompile Include="src\app\electionCarousel.module.ts" />
+    <TypeScriptCompile Include="src\app\function\getHtml.ts" />
+    <TypeScriptCompile Include="src\app\function\translateX.ts" />
     <TypeScriptCompile Include="src\app\services\candidate.ts" />
+    <TypeScriptCompile Include="src\app\services\container.ts" />
     <TypeScriptCompile Include="src\app\services\party.ts" />
+    <TypeScriptCompile Include="src\app\services\renderer.ts" />
     <TypeScriptCompile Include="src\app\services\riding.ts" />
     <TypeScriptCompile Include="src\app\services\ridingsDataService.ts" />
     <TypeScriptCompile Include="src\app\electionCarousel.states.ts" />
+    <TypeScriptCompile Include="src\app\services\viewPort.ts" />
     <TypeScriptCompile Include="test\riding.spec.ts" />
     <TypeScriptCompile Include="typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="typings\jquery\jquery.d.ts" />

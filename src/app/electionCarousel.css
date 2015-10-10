@@ -6,4 +6,21 @@
 .riding-slide {
     width: 500px;
     height: 200px;
+    position: relative;
+    float: left;
+}
+
+.container {
+    width: 50000px;
+    height: 200px;
+    -moz-transition: all 1s cubic-bezier(.10, .10, .25, .90);
+    -ms-transition: all 1s cubic-bezier(.10, .10, .25, .90);
+    -webkit-transition: all 1s cubic-bezier(.10, .10, .25, .90);
+    transition: all 1s cubic-bezier(.10, .10, .25, .90); 
+}
+
+.view-port {
+    width: 500px;
+    height: 200px;
+    overflow-x: hidden;
 }

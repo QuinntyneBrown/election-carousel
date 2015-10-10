@@ -20,6 +20,46 @@ declare module ElectionCarousel {
         totalVotes:number;
     }
 
+    export interface IGetHtmlFn {
+        (who: HTMLElement, deep: boolean): string
+    }
+
+    export interface IRenderer {
+        createInstance(options: IRendererInstanceOptions): IRenderer;
+        render(options?: any): void;
+    }
+
+    export interface IRendererInstanceOptions {
+        parentElement: ng.IAugmentedJQuery;
+        template: string;
+        attributes: ng.IAttributes;
+        scope: any;
+        items: Array<any>;
+        itemName: string;
+    }
+
+    export interface IContainer {
+        createInstance(options:IContainerInstanceOptions):IContainer;
+        augmentedJQuery: ng.IAugmentedJQuery;
+    }
+
+    export interface IViewPort {
+        createInstance(options: IViewPortInstanceOptions): IViewPort;
+        augmentedJQuery: ng.IAugmentedJQuery;
+    }
+
+    export interface IViewPortInstanceOptions {
+        width: number;
+        height: number;
+        parentElement: ng.IAugmentedJQuery;
+    }
+
+    export interface IContainerInstanceOptions {
+        width: number;
+        height: number;
+        parentElement: ng.IAugmentedJQuery;        
+    }
+
     export interface IRiding {
         createInstance(options: IRidingInstanceOptions): IRiding;
         id:number;

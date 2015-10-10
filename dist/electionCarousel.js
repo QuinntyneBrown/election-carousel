@@ -82,6 +82,45 @@ var ElectionCarousel;
 
 //# sourceMappingURL=ridingsController.js.map
 
+/// <reference path="../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var getHtml = function (who, deep) {
+        if (!who || !who.tagName)
+            return '';
+        var txt, ax, el = document.createElement("div");
+        el.appendChild(who.cloneNode(false));
+        txt = el.innerHTML;
+        if (deep) {
+            ax = txt.indexOf('>') + 1;
+            txt = txt.substring(0, ax) + who.innerHTML + txt.substring(ax);
+        }
+        el = null;
+        return txt;
+    };
+    angular.module("election-carousel").value("getHtml", getHtml);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=getHtml.js.map
+
+/// <reference path="../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    ElectionCarousel.translateX = function (element, value) {
+        angular.element(element).css({
+            "-moz-transform": "translateX(" + value + "px)",
+            "-webkit-transform": "translateX(" + value + "px)",
+            "-ms-transform": "translateX(" + value + "px)",
+            "-transform": "translateX(" + value + "px)"
+        });
+        return element;
+    };
+    angular.module("election-carousel").value("translateX", ElectionCarousel.translateX);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=translateX.js.map
+
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
@@ -157,6 +196,37 @@ var ElectionCarousel;
 
 //# sourceMappingURL=candidate.js.map
 
+/// <reference path="../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var Container = (function () {
+        function Container() {
+            this.createInstance = function (options) {
+                var instance = new ElectionCarousel.ViewPort();
+                var container = angular.element("<div class='container'></div>");
+                container.css("height", options.height);
+                container.css("width", options.width);
+                container.css("transition", "all 1s cubic-bezier(.10, .10, .25, .90)");
+                options.parentElement.append(container);
+                instance.augmentedJQuery = options.parentElement.find(".container");
+                return instance;
+            };
+        }
+        Object.defineProperty(Container.prototype, "augmentedJQuery", {
+            get: function () { return this._augmentedJQuery; },
+            set: function (value) { this._augmentedJQuery = value; },
+            enumerable: true,
+            configurable: true
+        });
+        return Container;
+    })();
+    ElectionCarousel.Container = Container;
+    angular.module("election-carousel").service("container", [ElectionCarousel.ViewPort]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=container.js.map
+
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
@@ -209,6 +279,29 @@ var ElectionCarousel;
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=party.js.map
+
+/// <reference path="../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var Renderer = (function () {
+        function Renderer($injector) {
+            var _this = this;
+            this.$injector = $injector;
+            this.createInstance = function (options) {
+                var instance = new Renderer(_this.$injector);
+                return instance;
+            };
+            this.render = function (options) {
+            };
+        }
+        return Renderer;
+    })();
+    ElectionCarousel.Renderer = Renderer;
+    angular.module("election-carousel").service("renderer", ["$injector", Renderer]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=renderer.js.map
 
 var ElectionCarousel;
 (function (ElectionCarousel) {
@@ -306,32 +399,36 @@ var ElectionCarousel;
 
 //# sourceMappingURL=ridingsDataService.js.map
 
+/// <reference path="../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
-    var Directives;
-    (function (Directives) {
-        var AppHeader = (function () {
-            function AppHeader() {
-                this.restrict = "E";
-                this.replace = true;
-                this.templateUrl = "src/app/directives/appHeader/appHeader.html";
-                this.link = function (scope, element, attributes) {
-                };
-            }
-            AppHeader.createInstance = function () {
-                return new AppHeader();
+    "use strict";
+    var ViewPort = (function () {
+        function ViewPort() {
+            this.createInstance = function (options) {
+                var instance = new ViewPort();
+                var viewPort = angular.element("<div class='view-port'></div>");
+                viewPort.css("overflowX", "hidden");
+                viewPort.css("height", options.height);
+                viewPort.css("width", options.width);
+                options.parentElement.append(viewPort);
+                instance.augmentedJQuery = options.parentElement.find(".view-port");
+                return instance;
             };
-            return AppHeader;
-        })();
-        Directives.AppHeader = AppHeader;
-    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
+        }
+        Object.defineProperty(ViewPort.prototype, "augmentedJQuery", {
+            get: function () { return this._augmentedJQuery; },
+            set: function (value) { this._augmentedJQuery = value; },
+            enumerable: true,
+            configurable: true
+        });
+        return ViewPort;
+    })();
+    ElectionCarousel.ViewPort = ViewPort;
+    angular.module("election-carousel").service("viewPort", [ViewPort]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
-//# sourceMappingURL=appHeader.js.map
-
-
-
-//# sourceMappingURL=carousel.js.map
+//# sourceMappingURL=viewPort.js.map
 
 var ElectionCarousel;
 (function (ElectionCarousel) {
@@ -355,6 +452,104 @@ var ElectionCarousel;
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=appFooter.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    var Directives;
+    (function (Directives) {
+        var AppHeader = (function () {
+            function AppHeader() {
+                this.restrict = "E";
+                this.replace = true;
+                this.templateUrl = "src/app/directives/appHeader/appHeader.html";
+                this.link = function (scope, element, attributes) {
+                };
+            }
+            AppHeader.createInstance = function () {
+                return new AppHeader();
+            };
+            return AppHeader;
+        })();
+        Directives.AppHeader = AppHeader;
+    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=appHeader.js.map
+
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    var Carousel = (function () {
+        function Carousel($interval, getHtml, renderer) {
+            var _this = this;
+            this.$interval = $interval;
+            this.getHtml = getHtml;
+            this.renderer = renderer;
+            this.restirct = "A";
+            this.transclude = 'element';
+            this.scope = false;
+            this.compile = function (template) {
+                var renderer = _this.renderer;
+                var parentElement = template.parent();
+                var getHtml = _this.getHtml;
+                return function (scope, element, attributes, controller, transclude) {
+                    transclude(scope.$new(), function (clone) {
+                        removeCustomAttributes(clone, "carousel");
+                        renderer.createInstance({
+                            parentElement: angular.element(parentElement),
+                            template: getHtml(clone[0], true),
+                            scope: scope,
+                            attributes: attributes,
+                            items: parseItems(scope, attributes),
+                            itemName: parseItemName(attributes)
+                        }).render();
+                    });
+                };
+                function parseItemName(attributes) {
+                    var match = attributes["carousel"].match(/^\s*(.+)\s+in\s+(.*?)\s*(\s+track\s+by\s+(.+)\s*)?$/);
+                    return match[1];
+                }
+                function parseItems(scope, attributes) {
+                    var match = attributes["carousel"].match(/^\s*(.+)\s+in\s+(.*?)\s*(\s+track\s+by\s+(.+)\s*)?$/);
+                    if (match) {
+                        var collectionStringArray = match[2].split(".");
+                        var items = scope;
+                        for (var i = 0; i < collectionStringArray.length; i++) {
+                            items = items[collectionStringArray[i]];
+                        }
+                        return items;
+                    }
+                    else {
+                        return JSON.parse(attributes["carousel"]);
+                    }
+                }
+                function removeCustomAttributes(clone, prefix) {
+                    var names = [];
+                    var attributes = clone[0].attributes;
+                    for (var i = 0; i < attributes.length; i++) {
+                        if (attributes[i].nodeName.indexOf(prefix) > -1)
+                            names.push(attributes[i].nodeName);
+                    }
+                    names.forEach(function (name) { clone[0].removeAttribute(name); });
+                }
+                function verifyRepeatExpression(repeatExpression) {
+                    if (repeatExpression.match(/limitTo/) || repeatExpression.match(/startFrom/)) {
+                        throw new Error('"limitTo" and "startFrom" filters are not allowed in directive');
+                    }
+                }
+                ;
+            };
+        }
+        Carousel.createInstance = function ($interval, getHtml, renderer) {
+            return new Carousel($interval, getHtml, renderer);
+        };
+        return Carousel;
+    })();
+    ElectionCarousel.Carousel = Carousel;
+    angular.module("election-carousel").directive("carousel", ["$interval", "getHtml", "renderer", Carousel.createInstance]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=carousel.js.map
 
 var ElectionCarousel;
 (function (ElectionCarousel) {
