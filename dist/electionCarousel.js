@@ -77,7 +77,7 @@ var ElectionCarousel;
         return RidingsController;
     })();
     ElectionCarousel.RidingsController = RidingsController;
-    angular.module("election-carousel").controller("ridingsController", [RidingsController]);
+    angular.module("election-carousel").controller("ridingsController", ["ridings", RidingsController]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=ridingsController.js.map
@@ -86,38 +86,66 @@ var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
     var Candidate = (function () {
-        function Candidate() {
+        function Candidate($filter, $injector) {
+            var _this = this;
+            this.$filter = $filter;
+            this.$injector = $injector;
             this.createInstance = function (options) {
-                var instance = new Candidate();
+                var instance = new Candidate(_this.$filter, _this.$injector);
+                instance.party = _this.$injector.get("party").createInstance({ partyCode: options.data.partyCode });
+                instance.name = options.data.name;
+                instance.votes = options.data.votes;
+                instance.riding = options.riding;
                 return instance;
             };
         }
         Object.defineProperty(Candidate.prototype, "name", {
             get: function () { return this._name; },
-            set: function (value) { this._name; },
+            set: function (value) { this._name = value; },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Candidate.prototype, "totalVotes", {
-            get: function () { return this._totalVotes; },
-            set: function (value) { this._totalVotes; },
+        Object.defineProperty(Candidate.prototype, "firstName", {
+            get: function () { return this.name.split(" ")[0]; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "lastName", {
+            get: function () {
+                var parts = this.name.split(" ");
+                var results = [];
+                for (var i = 1; i < parts.length; i++) {
+                    results.push(parts[i]);
+                }
+                return results.join(" ");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "votes", {
+            get: function () { return this._votes; },
+            set: function (value) { this._votes = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "percentageOfTotalVotes", {
+            get: function () {
+                var value = (this._votes / this.riding.totalVotes);
+                var percentage = this.$filter('number')(value, 3);
+                return (percentage * 100) + "%";
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Candidate.prototype, "riding", {
             get: function () { return this._riding; },
-            set: function (value) { this._riding; },
+            set: function (value) { this._riding = value; },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Candidate.prototype, "party", {
             get: function () { return this._party; },
-            set: function (value) { this._party; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Candidate.prototype, "percentageOfTotalVotes", {
-            get: function () { return this.totalVotes / this.riding.totalVotes; },
+            set: function (value) { this._party = value; },
             enumerable: true,
             configurable: true
         });
@@ -129,10 +157,63 @@ var ElectionCarousel;
         return Candidate;
     })();
     ElectionCarousel.Candidate = Candidate;
-    angular.module("election-carousel").service("candidate", [Candidate]);
+    angular.module("election-carousel").service("candidate", ["$filter", "$injector", Candidate]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=candidate.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var Party = (function () {
+        function Party() {
+            this.createInstance = function (options) {
+                var instance = new Party();
+                instance.partyCode = options.partyCode;
+                instance.id = options.id;
+                return instance;
+            };
+        }
+        Object.defineProperty(Party.prototype, "id", {
+            get: function () { return this._id; },
+            set: function (value) { this._id = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Party.prototype, "name", {
+            get: function () { return this._name; },
+            set: function (value) { this._name = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Party.prototype, "colorCode", {
+            get: function () {
+                if (this.partyCode == "NDP")
+                    return "#ED5C27";
+                if (this.partyCode == "PC")
+                    return "#0C499C";
+                if (this.partyCode == "LIB")
+                    return "#D71923";
+                if (this.partyCode == "GRN")
+                    return "#4C9F45";
+                return "#DDD";
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Party.prototype, "partyCode", {
+            get: function () { return this._partyCode; },
+            set: function (value) { this._partyCode = value; },
+            enumerable: true,
+            configurable: true
+        });
+        return Party;
+    })();
+    ElectionCarousel.Party = Party;
+    angular.module("election-carousel").service("party", [Party]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=party.js.map
 
 var ElectionCarousel;
 (function (ElectionCarousel) {
@@ -144,13 +225,15 @@ var ElectionCarousel;
             this.createInstance = function (options) {
                 var instance = new Riding(_this.candidate);
                 instance.id = options.data.id;
-                instance.displayName = options.data.name;
+                instance.name = options.data.name;
                 for (var i = 0; i < options.data.results.length; i++) {
                     instance.totalVotes = instance.totalVotes + options.data.results[i].votes;
                     var candidate = _this.candidate.createInstance({ riding: instance, data: options.data.results[i] });
-                    _this.candidates.push(candidate);
+                    var candidates = instance.candidates;
+                    candidates.push(candidate);
+                    instance.candidates = candidates;
                     if (options.data.results[i].isElected)
-                        _this.winningCandidate = candidate;
+                        instance.winningCandidate = candidate;
                 }
                 return instance;
             };
@@ -163,15 +246,15 @@ var ElectionCarousel;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Riding.prototype, "displayName", {
-            get: function () { return this._displayName; },
-            set: function (value) { this._displayName; },
+        Object.defineProperty(Riding.prototype, "name", {
+            get: function () { return this._name; },
+            set: function (value) { this._name = value; },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Riding.prototype, "candidates", {
             get: function () { return this._candidates; },
-            set: function (value) { this._candidates; },
+            set: function (value) { this._candidates = value; },
             enumerable: true,
             configurable: true
         });
@@ -183,7 +266,7 @@ var ElectionCarousel;
         });
         Object.defineProperty(Riding.prototype, "winningCandidate", {
             get: function () { return this._winningCandidate; },
-            set: function (value) { this._winningCandidate; },
+            set: function (value) { this._winningCandidate = value; },
             enumerable: true,
             configurable: true
         });
@@ -230,29 +313,6 @@ var ElectionCarousel;
 (function (ElectionCarousel) {
     var Directives;
     (function (Directives) {
-        var AppFooter = (function () {
-            function AppFooter() {
-                this.restrict = "E";
-                this.replace = true;
-                this.templateUrl = "src/app/directives/appFooter/appFooter.html";
-                this.link = function (scope, element, attributes) {
-                };
-            }
-            AppFooter.createInstance = function () {
-                return new AppFooter();
-            };
-            return AppFooter;
-        })();
-        Directives.AppFooter = AppFooter;
-    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=appFooter.js.map
-
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    var Directives;
-    (function (Directives) {
         var AppHeader = (function () {
             function AppHeader() {
                 this.restrict = "E";
@@ -271,6 +331,29 @@ var ElectionCarousel;
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=appHeader.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    var Directives;
+    (function (Directives) {
+        var AppFooter = (function () {
+            function AppFooter() {
+                this.restrict = "E";
+                this.replace = true;
+                this.templateUrl = "src/app/directives/appFooter/appFooter.html";
+                this.link = function (scope, element, attributes) {
+                };
+            }
+            AppFooter.createInstance = function () {
+                return new AppFooter();
+            };
+            return AppFooter;
+        })();
+        Directives.AppFooter = AppFooter;
+    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=appFooter.js.map
 
 
 

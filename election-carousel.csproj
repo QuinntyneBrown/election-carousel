@@ -97,6 +97,7 @@
     <TypeScriptCompile Include="src\app\directives\riding\riding.ts" />
     <TypeScriptCompile Include="src\app\electionCarousel.module.ts" />
     <TypeScriptCompile Include="src\app\services\candidate.ts" />
+    <TypeScriptCompile Include="src\app\services\party.ts" />
     <TypeScriptCompile Include="src\app\services\riding.ts" />
     <TypeScriptCompile Include="src\app\services\ridingsDataService.ts" />
     <TypeScriptCompile Include="src\app\electionCarousel.states.ts" />

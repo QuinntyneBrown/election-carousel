@@ -8,17 +8,20 @@
         public createInstance = (options: IRidingInstanceOptions) => {
             var instance = new Riding(this.candidate);
             instance.id = options.data.id;
-            instance.displayName = options.data.name;
+            instance.name = options.data.name;
             
             for (var i = 0; i < options.data.results.length; i++) {
                 instance.totalVotes = instance.totalVotes + options.data.results[i].votes;
 
                 var candidate = this.candidate.createInstance({ riding: instance, data: options.data.results[i] });
 
-                this.candidates.push(candidate);
+                var candidates = instance.candidates;
+                candidates.push(candidate);
+                instance.candidates = candidates;
 
                 if (options.data.results[i].isElected)
-                    this.winningCandidate = candidate;
+                    instance.winningCandidate = candidate;
+
             }
 
             return instance;
@@ -30,17 +33,17 @@
         
         public set id(value:number) { this._id = value; } 
 
-        private _displayName: string;
+        private _name: string;
 
-        public get displayName() { return this._displayName; }
+        public get name() { return this._name; }
 
-        public set displayName(value: string) { this._displayName; }
+        public set name(value: string) { this._name = value; }
 
         private _candidates: Array<ICandidate> = [];
 
         public get candidates() { return this._candidates; }
 
-        public set candidates(value: Array<ICandidate>) { this._candidates; }
+        public set candidates(value: Array<ICandidate>) { this._candidates = value; }
 
         private _totalVotes: number = 0;
 
@@ -52,7 +55,7 @@
 
         public get winningCandidate() { return this._winningCandidate; }
 
-        public set winningCandidate(value: ICandidate) { this._winningCandidate; }
+        public set winningCandidate(value: ICandidate) { this._winningCandidate = value; }
 
     }
 

@@ -10,5 +10,5 @@ module ElectionCarousel {
 
     }
 
-    angular.module("election-carousel").controller("ridingsController", [RidingsController]);
+    angular.module("election-carousel").controller("ridingsController", ["ridings",RidingsController]);
 } 

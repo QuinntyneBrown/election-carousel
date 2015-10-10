@@ -3,37 +3,43 @@
 declare module ElectionCarousel {
     
     export interface IParty {
+        createInstance(options:any):IParty;
         name: string;
         colorCode: string;
+        partyCode:string;
     }
 
     interface ICandidate {
         createInstance(options: ICandidateInstanceOptions): ICandidate;
         name: string;
-        totalVotes: number;
+        firstName: string;
+        lastName: string;
+        votes: number;
         riding: IRiding;
-        percentageOfTotalVotes: number;
+        percentageOfTotalVotes: string;
         isWinner: boolean;
         party: IParty;
     }
 
     export interface IRiding {
         createInstance(options: IRidingInstanceOptions): IRiding;
-        displayName: string;
+        id:number;
+        name: string;
         candidates: Array<ICandidate>;
         totalVotes: number;
         winningCandidate: ICandidate;
     }
 
-    interface IRidingsDataService {
+    export interface IRidingsDataService {
         getAll(): ng.IPromise<any>;
     }
 
-    interface IRidingInstanceOptions {
+    export interface IRidingInstanceOptions {
         data:any;
     }
 
-    interface ICandidateInstanceOptions {
-
+    export interface ICandidateInstanceOptions {
+        data: any;
+        riding: IRiding;
     }
 } 
