@@ -176,8 +176,8 @@ var ElectionCarousel;
         Object.defineProperty(Candidate.prototype, "percentageOfTotalVotes", {
             get: function () {
                 var value = (this._votes / this.totalVotes);
-                var percentage = this.$filter('number')(value, 3);
-                return (percentage * 100) + "%";
+                var percentage = this.$filter('number')(value * 100, 1);
+                return (percentage) + "%";
             },
             enumerable: true,
             configurable: true
@@ -258,10 +258,10 @@ var ElectionCarousel;
                 if (this.partyCode == "PC")
                     return "#0C499C";
                 if (this.partyCode == "LIB")
-                    return "#D71923";
+                    return "#D71920";
                 if (this.partyCode == "GRN")
                     return "#4C9F45";
-                return "#DDD";
+                return "#666";
             },
             enumerable: true,
             configurable: true
@@ -486,6 +486,29 @@ var ElectionCarousel;
 (function (ElectionCarousel) {
     var Directives;
     (function (Directives) {
+        var AppHeader = (function () {
+            function AppHeader() {
+                this.restrict = "E";
+                this.replace = true;
+                this.templateUrl = "src/app/directives/appHeader/appHeader.html";
+                this.link = function (scope, element, attributes) {
+                };
+            }
+            AppHeader.createInstance = function () {
+                return new AppHeader();
+            };
+            return AppHeader;
+        })();
+        Directives.AppHeader = AppHeader;
+    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=appHeader.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    var Directives;
+    (function (Directives) {
         var CandidateList = (function () {
             function CandidateList() {
                 this.restrict = "E";
@@ -513,24 +536,24 @@ var ElectionCarousel;
 (function (ElectionCarousel) {
     var Directives;
     (function (Directives) {
-        var AppHeader = (function () {
-            function AppHeader() {
+        var AppFooter = (function () {
+            function AppFooter() {
                 this.restrict = "E";
                 this.replace = true;
-                this.templateUrl = "src/app/directives/appHeader/appHeader.html";
+                this.templateUrl = "src/app/directives/appFooter/appFooter.html";
                 this.link = function (scope, element, attributes) {
                 };
             }
-            AppHeader.createInstance = function () {
-                return new AppHeader();
+            AppFooter.createInstance = function () {
+                return new AppFooter();
             };
-            return AppHeader;
+            return AppFooter;
         })();
-        Directives.AppHeader = AppHeader;
+        Directives.AppFooter = AppFooter;
     })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
 })(ElectionCarousel || (ElectionCarousel = {}));
 
-//# sourceMappingURL=appHeader.js.map
+//# sourceMappingURL=appFooter.js.map
 
 /// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
@@ -606,26 +629,3 @@ var ElectionCarousel;
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=carousel.js.map
-
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    var Directives;
-    (function (Directives) {
-        var AppFooter = (function () {
-            function AppFooter() {
-                this.restrict = "E";
-                this.replace = true;
-                this.templateUrl = "src/app/directives/appFooter/appFooter.html";
-                this.link = function (scope, element, attributes) {
-                };
-            }
-            AppFooter.createInstance = function () {
-                return new AppFooter();
-            };
-            return AppFooter;
-        })();
-        Directives.AppFooter = AppFooter;
-    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=appFooter.js.map

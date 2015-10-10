@@ -62,6 +62,8 @@
     <Content Include="dist\electionCarousel.min.js.map">
       <DependentUpon>electionCarousel.min.js</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\electioncarousel - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\electioncarousel - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

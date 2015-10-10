@@ -1,8 +1,21 @@
 ﻿<div>
     
     <div data-ng-repeat="candidate in candidates">
-        <h1>{{ candidate.name }}</h1>    
-        <h2>{{ candidate.votes }}</h2>
+        
+        <div class="candidate" style="width: 100%; padding-bottom: 15px;">
+            <div class="left" style="width:40px; padding: 15px; color: #FFF; font-weight: 600"
+                 data-ng-style="{ backgroundColor: candidate.party.colorCode }">
+                <h2>{{ candidate.percentageOfTotalVotes }}</h2>
+            </div>
+            <div class="right" style="text-align: left;width: 70%; margin-left: 15px;" >
+                <h1>{{ candidate.name }}</h1>
+                <h2>{{ candidate.votes }}</h2>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+            
+        
     </div>    
 
 </div>

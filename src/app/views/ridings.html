@@ -1,10 +1,18 @@
 ﻿<div class="ridings">
-        
-    <div carousel="riding in vm.ridings" class="riding-slide" data-ng-style="{ backgroundColor: riding.winningCandidate.party.colorCode }">
 
-        <h1>{{ riding.name }}</h1>
-        
-        <candidate-list candidates="riding.candidates"></candidate-list>
+    <div carousel="riding in vm.ridings" class="riding-slide">
+
+        <div class="header" data-ng-style="{ backgroundColor: riding.winningCandidate.party.colorCode }">
+            <h1 class="riding-name">{{ riding.name }}</h1>
+        </div>
+
+        <div class="content">
+
+            <candidate-list candidates="riding.candidates"></candidate-list>
+
+        </div>
+
+
 
     </div>
 

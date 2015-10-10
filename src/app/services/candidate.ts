@@ -43,8 +43,8 @@
 
         public get percentageOfTotalVotes() {
             var value: any = (this._votes / this.totalVotes);
-            var percentage: any = this.$filter('number')(value, 3);
-            return (percentage * 100) + "%";
+            var percentage: any = this.$filter('number')(value * 100, 1);
+            return (percentage) + "%";
         }
 
 

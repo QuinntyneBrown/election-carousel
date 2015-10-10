@@ -32,12 +32,12 @@
                 return "#0C499C";
 
             if (this.partyCode == "LIB")
-                return "#D71923";
+                return "#D71920";
 
             if (this.partyCode == "GRN")
                 return "#4C9F45";
 
-            return "#DDD";
+            return "#666";
         }
 
 

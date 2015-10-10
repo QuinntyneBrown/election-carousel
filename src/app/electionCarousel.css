@@ -1,13 +1,52 @@
 ﻿body {
     font-family: "Gotham SSm A","Gotham SSm B",Arial,Helvetica,sans-serif;
     color: whitesmoke;
+    background-color: #F1F1F1;
+}
+
+.right {
+    position: relative;
+    float: right;
+}
+
+.left {
+    position: relative;
+    float: left;
+}
+
+.clear {
+    clear: both;
 }
 
 .riding-slide {
-    width: 500px;
-    height: 200px;
+    width: 800px;
+    height: 370px;
     position: relative;
     float: left;
+}
+
+.riding-slide .header {
+    padding-bottom: 15px;
+    padding-top: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 100px;
+}
+
+.riding-slide .content {
+    padding-bottom: 15px;
+    padding-top: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #6F6F6F;
+    background-color: #FFF;
+    height: 270px;
+}
+
+
+.riding-name {
+    font-size: 3em;
+    font-weight: 600;
 }
 
 .container {
@@ -20,7 +59,7 @@
 }
 
 .view-port {
-    width: 500px;
-    height: 200px;
-    overflow-x: hidden;
+    width: 800px;
+    height: 400px;
+    overflow: hidden;
 }
