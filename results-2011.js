@@ -1,0 +1,1 @@
+﻿gNews_getRidingDetailsCallback([])
