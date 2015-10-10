@@ -80,6 +80,9 @@
     <Content Include="node_modules\angular\angular.js" />
     <Content Include="node_modules\jquery\dist\jquery.js" />
     <Content Include="results-2011.js" />
+    <Content Include="src\app\directives\appFooter\appFooter.html" />
+    <Content Include="src\app\directives\appHeader\appHeader.html" />
+    <Content Include="src\app\directives\riding\riding.html" />
     <Content Include="src\app\views\ridings.html" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -88,19 +91,22 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\app\controllers\ridingsController.ts" />
+    <TypeScriptCompile Include="src\app\directives\appFooter\appFooter.ts" />
+    <TypeScriptCompile Include="src\app\directives\appHeader\appHeader.ts" />
+    <TypeScriptCompile Include="src\app\directives\carousel\carousel.ts" />
+    <TypeScriptCompile Include="src\app\directives\riding\riding.ts" />
     <TypeScriptCompile Include="src\app\electionCarousel.module.ts" />
+    <TypeScriptCompile Include="src\app\services\candidate.ts" />
     <TypeScriptCompile Include="src\app\services\riding.ts" />
     <TypeScriptCompile Include="src\app\services\ridingsDataService.ts" />
     <TypeScriptCompile Include="src\app\electionCarousel.states.ts" />
+    <TypeScriptCompile Include="test\riding.spec.ts" />
     <TypeScriptCompile Include="typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="typings\tsd.d.ts" />
     <TypeScriptCompile Include="typings\typeScriptApp.d.ts" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\app\directives\" />
-    <Folder Include="test\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

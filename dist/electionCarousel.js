@@ -73,7 +73,6 @@ var ElectionCarousel;
     var RidingsController = (function () {
         function RidingsController(ridings) {
             this.ridings = ridings;
-            alert(ridings.length);
         }
         return RidingsController;
     })();
@@ -86,13 +85,84 @@ var ElectionCarousel;
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
-    var Riding = (function () {
-        function Riding() {
+    var Candidate = (function () {
+        function Candidate() {
             this.createInstance = function (options) {
-                var instance = new Riding();
+                var instance = new Candidate();
                 return instance;
             };
         }
+        Object.defineProperty(Candidate.prototype, "name", {
+            get: function () { return this._name; },
+            set: function (value) { this._name; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "totalVotes", {
+            get: function () { return this._totalVotes; },
+            set: function (value) { this._totalVotes; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "riding", {
+            get: function () { return this._riding; },
+            set: function (value) { this._riding; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "party", {
+            get: function () { return this._party; },
+            set: function (value) { this._party; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "percentageOfTotalVotes", {
+            get: function () { return this.totalVotes / this.riding.totalVotes; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "isWinner", {
+            get: function () { return this.riding.winningCandidate.name == this.name; },
+            enumerable: true,
+            configurable: true
+        });
+        return Candidate;
+    })();
+    ElectionCarousel.Candidate = Candidate;
+    angular.module("election-carousel").service("candidate", [Candidate]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=candidate.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var Riding = (function () {
+        function Riding(candidate) {
+            var _this = this;
+            this.candidate = candidate;
+            this.createInstance = function (options) {
+                var instance = new Riding(_this.candidate);
+                instance.id = options.data.id;
+                instance.displayName = options.data.name;
+                for (var i = 0; i < options.data.results.length; i++) {
+                    instance.totalVotes = instance.totalVotes + options.data.results[i].votes;
+                    var candidate = _this.candidate.createInstance({ riding: instance, data: options.data.results[i] });
+                    _this.candidates.push(candidate);
+                    if (options.data.results[i].isElected)
+                        _this.winningCandidate = candidate;
+                }
+                return instance;
+            };
+            this._candidates = [];
+            this._totalVotes = 0;
+        }
+        Object.defineProperty(Riding.prototype, "id", {
+            get: function () { return this._id; },
+            set: function (value) { this._id = value; },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(Riding.prototype, "displayName", {
             get: function () { return this._displayName; },
             set: function (value) { this._displayName; },
@@ -107,7 +177,7 @@ var ElectionCarousel;
         });
         Object.defineProperty(Riding.prototype, "totalVotes", {
             get: function () { return this._totalVotes; },
-            set: function (value) { this._totalVotes; },
+            set: function (value) { this._totalVotes = value; },
             enumerable: true,
             configurable: true
         });
@@ -119,7 +189,8 @@ var ElectionCarousel;
         });
         return Riding;
     })();
-    angular.module("election-carousel").service("riding", [Riding]);
+    ElectionCarousel.Riding = Riding;
+    angular.module("election-carousel").service("riding", ["candidate", Riding]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=riding.js.map
@@ -154,3 +225,76 @@ var ElectionCarousel;
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=ridingsDataService.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    var Directives;
+    (function (Directives) {
+        var AppFooter = (function () {
+            function AppFooter() {
+                this.restrict = "E";
+                this.replace = true;
+                this.templateUrl = "src/app/directives/appFooter/appFooter.html";
+                this.link = function (scope, element, attributes) {
+                };
+            }
+            AppFooter.createInstance = function () {
+                return new AppFooter();
+            };
+            return AppFooter;
+        })();
+        Directives.AppFooter = AppFooter;
+    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=appFooter.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    var Directives;
+    (function (Directives) {
+        var AppHeader = (function () {
+            function AppHeader() {
+                this.restrict = "E";
+                this.replace = true;
+                this.templateUrl = "src/app/directives/appHeader/appHeader.html";
+                this.link = function (scope, element, attributes) {
+                };
+            }
+            AppHeader.createInstance = function () {
+                return new AppHeader();
+            };
+            return AppHeader;
+        })();
+        Directives.AppHeader = AppHeader;
+    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=appHeader.js.map
+
+
+
+//# sourceMappingURL=carousel.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    var Directives;
+    (function (Directives) {
+        var Riding = (function () {
+            function Riding() {
+                this.restrict = "E";
+                this.replace = true;
+                this.templateUrl = "src/app/directives/riding/riding.html";
+                this.link = function (scope, element, attributes) {
+                };
+            }
+            Riding.createInstance = function () {
+                return new Riding();
+            };
+            return Riding;
+        })();
+        Directives.Riding = Riding;
+    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=riding.js.map

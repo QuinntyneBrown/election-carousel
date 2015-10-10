@@ -2,7 +2,7 @@
 
 declare module ElectionCarousel {
     
-    interface IParty {
+    export interface IParty {
         name: string;
         colorCode: string;
     }
@@ -17,7 +17,7 @@ declare module ElectionCarousel {
         party: IParty;
     }
 
-    interface IRiding {
+    export interface IRiding {
         createInstance(options: IRidingInstanceOptions): IRiding;
         displayName: string;
         candidates: Array<ICandidate>;
@@ -30,7 +30,7 @@ declare module ElectionCarousel {
     }
 
     interface IRidingInstanceOptions {
-
+        data:any;
     }
 
     interface ICandidateInstanceOptions {

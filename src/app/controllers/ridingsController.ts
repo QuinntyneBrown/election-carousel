@@ -6,7 +6,7 @@ module ElectionCarousel {
 
     export class RidingsController {
 
-        constructor(private ridings: Array<IRiding>) { alert(ridings.length); }
+        constructor(private ridings: Array<IRiding>) { }
 
     }
 
