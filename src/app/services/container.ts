@@ -23,6 +23,8 @@ module ElectionCarousel {
         public get augmentedJQuery() { return this._augmentedJQuery; }
 
         public set augmentedJQuery(value: ng.IAugmentedJQuery) { this._augmentedJQuery = value; }
+
+        public get htmlElement() { return this.augmentedJQuery[0]; }
     }
 
     angular.module("election-carousel").service("container", [Container]);

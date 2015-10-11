@@ -41,6 +41,7 @@ declare module ElectionCarousel {
     export interface IContainer {
         createInstance(options:IContainerInstanceOptions):IContainer;
         augmentedJQuery: ng.IAugmentedJQuery;
+        htmlElement: HTMLElement;
     }
 
     export interface IViewPort {
@@ -80,5 +81,23 @@ declare module ElectionCarousel {
     export interface ICandidateInstanceOptions {
         data: any;
         totalVotes: number;
+    }
+
+    export interface INavigation {
+        createInstance(options: INavigationInstanceOptions):INavigation;
+    }
+
+    export interface IGetX {
+        (element: HTMLElement): number;
+    }
+
+    export interface INavigationInstanceOptions {
+        guid: string;
+        parentElement: ng.IAugmentedJQuery;
+        scope:any;
+    }
+
+    export interface ITranslateX {
+        (element: HTMLElement, value: number): HTMLElement;
     }
 } 

@@ -6,16 +6,21 @@ module ElectionCarousel {
 
     export class Renderer implements IRenderer {
         
-        constructor(private $compile:ng.ICompileService, private $injector: ng.auto.IInjectorService, private $timeout:ng.ITimeoutService) { }
+        constructor(private $compile: ng.ICompileService,
+            private $injector: ng.auto.IInjectorService,
+            private $timeout: ng.ITimeoutService,
+            private getX: IGetX,
+            private translateX:ITranslateX) { }
 
         public createInstance = (options: IRendererInstanceOptions) => {
-            var instance = new Renderer(this.$compile,this.$injector, this.$timeout);
+            var instance = new Renderer(this.$compile, this.$injector, this.$timeout, this.getX, this.translateX);
 
             instance.template = options.template;
             instance.items = options.items;
             instance.itemName = options.itemName;
             instance.scope = options.scope;
             instance.parentElement = options.parentElement;
+            instance.guid = options.attributes["carouselGuid"];
 
             instance.viewPort = (<IViewPort>this.$injector.get("viewPort")).createInstance({
                 height: Number(options.attributes["carouselHeight"]),
@@ -29,11 +34,60 @@ module ElectionCarousel {
                 parentElement: instance.viewPort.augmentedJQuery
             });
 
+            instance.container.htmlElement.addEventListener('transitionend', () => {
+                instance.inTransition = false;
+            });
+
+            instance.navigation = (<INavigation>this.$injector.get("navigation")).createInstance({
+                guid: instance.guid,
+                parentElement: instance.viewPort.augmentedJQuery,
+                scope: instance.scope
+            });
+
+            instance.scope = options.scope;
+
+            instance.scope.onPrevious = instance.renderPrevious;
+
+            instance.scope.onNext = instance.renderNext;
+
             return instance;
         }
 
         public render = (options: any) => {
             if (!this.hasRendered) this.initialRender();
+        }
+
+        public renderNext = () => {
+
+            if (!this.inTransition) {
+
+                this.inTransition = true;
+
+                var x = this.getX(this.container.htmlElement);
+
+                if (x === (this.items.length * (-650)) + 650) {
+                    this.translateX(this.container.htmlElement, 0);
+                } else {
+                    this.translateX(this.container.htmlElement, x - 650);
+                }
+                
+            }
+
+        }
+
+        renderPrevious = () => {
+            if (!this.inTransition) {
+
+                this.inTransition = true;
+
+                var x = this.getX(this.container.htmlElement);
+
+                if (x === 0){
+                    this.translateX(this.container.augmentedJQuery[0], x + (this.items.length * (-650)) + 650);
+                } else {
+                    this.translateX(this.container.augmentedJQuery[0], x + 650);
+                }
+            }
         }
 
         public initialRender = () => {
@@ -59,13 +113,23 @@ module ElectionCarousel {
 
         public hasRendered: boolean = false;
 
+        public inTransition = false;
+
+        public _guid: string;
+
+        public get guid() { return this._guid; }
+
+        public set guid(value:string) { this._guid = value; }
+
         public parentElement: ng.IAugmentedJQuery;
 
         public container: IContainer;
 
         public viewPort: IViewPort;
 
+        public navigation: INavigation;
+        
     }
 
-    angular.module("election-carousel").service("renderer", ["$compile","$injector","$timeout",Renderer]);
+    angular.module("election-carousel").service("renderer", ["$compile", "$injector", "$timeout","getX","translateX",Renderer]);
 } 

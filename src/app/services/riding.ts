@@ -3,13 +3,13 @@
     "use strict";
 
     export class Riding implements IRiding {
-        constructor(private candidate:ICandidate) { }
+        constructor(private candidate: ICandidate) {}
 
         public createInstance = (options: IRidingInstanceOptions) => {
             var instance = new Riding(this.candidate);
             instance.id = options.data.id;
             instance.name = options.data.name;
-            
+
             for (var i = 0; i < options.data.results.length; i++) {
                 instance.totalVotes = instance.totalVotes + options.data.results[i].votes;
             }
@@ -27,12 +27,12 @@
 
             return instance;
         }
-        
+
         private _id: number;
 
         public get id() { return this._id; }
-        
-        public set id(value:number) { this._id = value; } 
+
+        public set id(value: number) { this._id = value; }
 
         private _name: string;
 
@@ -42,7 +42,9 @@
 
         private _candidates: Array<ICandidate> = [];
 
-        public get candidates() { return this._candidates; }
+        public get candidates() {
+            return this._candidates.sort((a: ICandidate, b: ICandidate) => { return b.votes - a.votes; });
+        }
 
         public set candidates(value: Array<ICandidate>) { this._candidates = value; }
 

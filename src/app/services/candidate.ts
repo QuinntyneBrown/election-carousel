@@ -10,9 +10,12 @@
             instance.party = (<IParty>this.$injector.get("party")).createInstance({ partyCode: options.data.partyCode });
             instance.name = options.data.name;
             instance.votes = options.data.votes;
+            instance.isElected = options.data.isElected;
             instance.totalVotes = options.totalVotes;
             return instance;
         }
+
+        public isElected: boolean;
 
         private _totalVotes: number;
 

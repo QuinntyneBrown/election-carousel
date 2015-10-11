@@ -1,5 +1,7 @@
-﻿body {
+﻿
+body {
     font-family: "Gotham SSm A","Gotham SSm B",Arial,Helvetica,sans-serif;
+    font-size: 16px;
     color: whitesmoke;
     background-color: #F1F1F1;
 }
@@ -18,19 +20,25 @@
     clear: both;
 }
 
+.footnote {
+    font-size: 75%;
+    margin-top: 30px;
+}
+
 .riding-slide {
-    width: 800px;
-    height: 370px;
+    max-width: 650px;
+    width: 100%;
+    min-height: 300px;
     position: relative;
     float: left;
 }
 
 .riding-slide .header {
-    padding-bottom: 15px;
-    padding-top: 15px;
+    padding-bottom: 7.5px;
+    padding-top: 7.5px;
     padding-left: 20px;
     padding-right: 20px;
-    height: 100px;
+    height: 85px;
 }
 
 .riding-slide .content {
@@ -40,12 +48,12 @@
     padding-right: 20px;
     color: #6F6F6F;
     background-color: #FFF;
-    height: 270px;
+    min-height: 150px;
 }
 
 
 .riding-name {
-    font-size: 3em;
+    font-size: 250%;
     font-weight: 600;
 }
 
@@ -59,7 +67,42 @@
 }
 
 .view-port {
-    width: 800px;
-    height: 400px;
-    overflow: hidden;
+    max-width: 650px;
+    width: 100%;
+    min-height: 300px;
+    overflow-x: hidden;
+}
+
+.candidate h1 {
+    font-size: 80%;
+    font-weight: 600;
+    line-height: 20px
+}
+
+/* navigation */
+
+.view-port .navigation {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 20px;
+    position: relative;
+}
+
+.view-port .navigation .previous {
+    color: #6F6F6F;
+    position: relative;
+    float: left;
+    height: 20px;
+    width: 50%;
+    text-align: right;
+}
+
+.view-port .navigation .next {
+    position: relative;
+    float: right;
+    height: 20px;
+    width: 50%;
+    text-align: left;
+    color: #6F6F6F;
 }

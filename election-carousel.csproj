@@ -101,9 +101,11 @@
     <TypeScriptCompile Include="src\app\directives\carousel\carousel.ts" />
     <TypeScriptCompile Include="src\app\electionCarousel.module.ts" />
     <TypeScriptCompile Include="src\app\function\getHtml.ts" />
+    <TypeScriptCompile Include="src\app\function\getX.ts" />
     <TypeScriptCompile Include="src\app\function\translateX.ts" />
     <TypeScriptCompile Include="src\app\services\candidate.ts" />
     <TypeScriptCompile Include="src\app\services\container.ts" />
+    <TypeScriptCompile Include="src\app\services\navigation.ts" />
     <TypeScriptCompile Include="src\app\services\party.ts" />
     <TypeScriptCompile Include="src\app\services\renderedNodes.ts" />
     <TypeScriptCompile Include="src\app\services\renderer.ts" />
