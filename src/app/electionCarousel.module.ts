@@ -2,11 +2,14 @@
 
 angular.module("templates", []);
 
-angular.module("election-carousel", ["ui.router","templates"])
+angular.module("election-carousel", ["ui.router", "templates"])
     .config([
-    "$stateProvider", ($stateProvider: ng.ui.IStateProvider) => {
+        "$stateProvider", ($stateProvider: ng.ui.IStateProvider) => {
 
-        ElectionCarousel.States.configure($stateProvider);
+            ElectionCarousel.States.configure($stateProvider);
 
+        }
+    ]).run([() => {
+        FastClick.attach(document.body);
     }]);
 

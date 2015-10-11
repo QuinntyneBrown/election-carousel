@@ -80,6 +80,7 @@
     <Content Include="karma.conf.js" />
     <Content Include="node_modules\angular-ui-router\release\angular-ui-router.js" />
     <Content Include="node_modules\angular\angular.js" />
+    <Content Include="node_modules\fastclick\lib\fastclick.js" />
     <Content Include="node_modules\jquery\dist\jquery.js" />
     <Content Include="results-2011.js" />
     <Content Include="src\app\directives\appFooter\appFooter.html" />

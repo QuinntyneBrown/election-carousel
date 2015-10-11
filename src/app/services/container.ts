@@ -9,8 +9,7 @@ module ElectionCarousel {
 
         public createInstance = (options: IContainerInstanceOptions) => {
             var instance = new Container();
-            var container = angular.element("<div class='container'></div>");            
-            container.css("width", options.width);
+            var container = angular.element("<div class='container'></div>");                        
             options.parentElement.append(container);
             instance.augmentedJQuery = options.parentElement.find(".container");
             return instance;

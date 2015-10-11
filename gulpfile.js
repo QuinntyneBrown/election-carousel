@@ -46,6 +46,7 @@ gulp.task('run-unit-tests', ['concat-compiled-ts-tests', 'template-cache'], func
         'node_modules/angular/angular.js',
         'node_modules/angular-mocks/angular-mocks.js',
         'node_modules/angular-ui-router/release/angular-ui-router.js',
+        'node_modules/fastclick/lib/fastclick.js',
         'dist/electionCarousel.js',
         'test/tests.js'])
         .pipe(karma({
