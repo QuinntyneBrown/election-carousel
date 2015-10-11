@@ -10,7 +10,7 @@ module ElectionCarousel {
         public createInstance = (options: IContainerInstanceOptions) => {
             var instance = new Container();
             var container = angular.element("<div class='container'></div>");
-            container.css("height", options.height);
+            //container.css("height", options.height);
             container.css("width", options.width);
             container.css("transition", "all 1s cubic-bezier(.10, .10, .25, .90)");
             options.parentElement.append(container);
@@ -25,6 +25,8 @@ module ElectionCarousel {
         public set augmentedJQuery(value: ng.IAugmentedJQuery) { this._augmentedJQuery = value; }
 
         public get htmlElement() { return this.augmentedJQuery[0]; }
+
+        public get height() { return this.augmentedJQuery.height(); }
     }
 
     angular.module("election-carousel").service("container", [Container]);

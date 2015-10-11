@@ -102,6 +102,7 @@
     <TypeScriptCompile Include="src\app\electionCarousel.module.ts" />
     <TypeScriptCompile Include="src\app\function\getHtml.ts" />
     <TypeScriptCompile Include="src\app\function\getX.ts" />
+    <TypeScriptCompile Include="src\app\function\isMobile.ts" />
     <TypeScriptCompile Include="src\app\function\translateX.ts" />
     <TypeScriptCompile Include="src\app\services\candidate.ts" />
     <TypeScriptCompile Include="src\app\services\container.ts" />

@@ -22,7 +22,10 @@ module ElectionCarousel {
 
         public get augmentedJQuery() { return this._augmentedJQuery; }
 
-        public set augmentedJQuery (value:ng.IAugmentedJQuery) { this._augmentedJQuery = value; }
+        public set augmentedJQuery(value: ng.IAugmentedJQuery) { this._augmentedJQuery = value; }
+
+        public get width() { return this.augmentedJQuery.width(); }
+
     }
 
     angular.module("election-carousel").service("viewPort", [ViewPort]);

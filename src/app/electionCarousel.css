@@ -60,10 +60,10 @@ body {
 .container {
     width: 50000px;
     height: 200px;
-    -moz-transition: all 1s cubic-bezier(.10, .10, .25, .90);
-    -ms-transition: all 1s cubic-bezier(.10, .10, .25, .90);
-    -webkit-transition: all 1s cubic-bezier(.10, .10, .25, .90);
-    transition: all 1s cubic-bezier(.10, .10, .25, .90); 
+    -moz-transition: all .300s cubic-bezier(.10, .10, .25, .90);
+    -ms-transition: all .300s cubic-bezier(.10, .10, .25, .90);
+    -webkit-transition: all .300s cubic-bezier(.10, .10, .25, .90);
+    transition: all .300s cubic-bezier(.10, .10, .25, .90); 
 }
 
 .view-port {
@@ -96,6 +96,7 @@ body {
     height: 20px;
     width: 50%;
     text-align: right;
+    cursor: pointer;
 }
 
 .view-port .navigation .next {
@@ -105,4 +106,5 @@ body {
     width: 50%;
     text-align: left;
     color: #6F6F6F;
+    cursor: pointer;
 }

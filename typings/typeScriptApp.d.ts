@@ -2,6 +2,10 @@
 
 declare module ElectionCarousel {
     
+    export interface IIsMobileFn {
+        ():boolean;
+    }
+
     export interface IParty {
         createInstance(options:any):IParty;
         name: string;
@@ -47,6 +51,7 @@ declare module ElectionCarousel {
     export interface IViewPort {
         createInstance(options: IViewPortInstanceOptions): IViewPort;
         augmentedJQuery: ng.IAugmentedJQuery;
+        width:number;
     }
 
     export interface IViewPortInstanceOptions {

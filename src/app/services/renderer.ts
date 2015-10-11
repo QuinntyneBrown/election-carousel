@@ -28,6 +28,18 @@ module ElectionCarousel {
                 parentElement: options.parentElement
             });
 
+            instance.lastViewPortWidth = instance.viewPort.width;
+
+            setInterval(() => {
+
+                if (instance.lastViewPortWidth != instance.viewPort.width) {
+                    instance.lastViewPortWidth = instance.viewPort.width;
+
+                    instance.reRender();
+
+                }
+            }, 10);
+
             instance.container = (<IContainer>this.$injector.get("container")).createInstance({
                 height: Number(options.attributes["carouselHeight"]),
                 width: Number(options.attributes["carouselWidth"]) * options.items.length,
@@ -57,18 +69,23 @@ module ElectionCarousel {
             if (!this.hasRendered) this.initialRender();
         }
 
-        public renderNext = () => {
+        public reRender = () => {
+            this.translateX(this.container.htmlElement, 0);
+            if (!this.scope.$$phase)
+                this.scope.$digest();    
+        }
 
+        public renderNext = () => {
             if (!this.inTransition) {
 
                 this.inTransition = true;
 
                 var x = this.getX(this.container.htmlElement);
 
-                if (x === (this.items.length * (-650)) + 650) {
+                if (x === (this.items.length * (-this.lastViewPortWidth)) + this.lastViewPortWidth) {
                     this.translateX(this.container.htmlElement, 0);
                 } else {
-                    this.translateX(this.container.htmlElement, x - 650);
+                    this.translateX(this.container.htmlElement, x - this.lastViewPortWidth);
                 }
                 
             }
@@ -83,9 +100,9 @@ module ElectionCarousel {
                 var x = this.getX(this.container.htmlElement);
 
                 if (x === 0){
-                    this.translateX(this.container.augmentedJQuery[0], x + (this.items.length * (-650)) + 650);
+                    this.translateX(this.container.augmentedJQuery[0], x + (this.items.length * (-this.lastViewPortWidth)) + this.lastViewPortWidth);
                 } else {
-                    this.translateX(this.container.augmentedJQuery[0], x + 650);
+                    this.translateX(this.container.augmentedJQuery[0], x + this.lastViewPortWidth);
                 }
             }
         }
@@ -96,6 +113,8 @@ module ElectionCarousel {
                 var childScope: any = this.scope.$new(true);
                 childScope[this.itemName] = this.items[i];
                 childScope.$$index = i;
+                childScope.viewPort = this.viewPort;
+                childScope.container = this.container;
                 var itemContent = this.$compile(angular.element(this.template))(childScope);
                 fragment.appendChild(itemContent[0]);
             }
@@ -114,6 +133,8 @@ module ElectionCarousel {
         public hasRendered: boolean = false;
 
         public inTransition = false;
+
+        public lastViewPortWidth:number = 0;
 
         public _guid: string;
 
