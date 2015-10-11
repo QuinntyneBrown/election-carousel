@@ -88,6 +88,7 @@
     <Content Include="src\app\electionCarousel.css" />
     <Content Include="src\app\reset.css" />
     <Content Include="src\app\views\ridings.html" />
+    <Content Include="templates.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

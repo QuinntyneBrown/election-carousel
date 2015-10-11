@@ -1,5 +1,6 @@
 /// <reference path="../../typings/typescriptapp.d.ts" />
-angular.module("election-carousel", ["ui.router"])
+angular.module("templates", []);
+angular.module("election-carousel", ["ui.router", "templates"])
     .config([
     "$stateProvider", function ($stateProvider) {
         ElectionCarousel.States.configure($stateProvider);

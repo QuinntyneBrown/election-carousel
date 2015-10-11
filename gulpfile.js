@@ -9,6 +9,7 @@ var tsc = require('gulp-typescript');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var karma = require('gulp-karma');
+var templateCache = require("gulp-angular-templatecache");
 
 var config = new Config();
 
@@ -39,7 +40,7 @@ gulp.task('concat-compiled-ts-tests', ['compile-ts-tests'], function () {
       .pipe(gulp.dest('./test/'));
 });
 
-gulp.task('run-unit-tests', ['concat-compiled-ts-tests'], function () {
+gulp.task('run-unit-tests', ['concat-compiled-ts-tests', 'template-cache'], function () {
     return gulp.src([
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/angular/angular.js',
@@ -73,6 +74,13 @@ gulp.task('compress', ['concat-compiled-ts'], function () {
       .pipe(gulp.dest('dist'));
 });
 
+var baseFn = function (file) { return './' + file.relative; }
+
+gulp.task('template-cache', function () {
+    return gulp.src(config.allHTML)
+      .pipe(templateCache('templates.js', { root: '', base: baseFn }))
+      .pipe(gulp.dest('.'));
+});
 
 gulp.task('compile-ts', ['clean-ts'], function () {
     var sourceTsFiles = [config.allTypeScript,                
@@ -101,7 +109,7 @@ gulp.task('concat-compiled-ts', ['compile-ts'], function () {
 });
 
 gulp.task('watch', ['concat-compiled-ts'], function () {
-    gulp.watch(config.allFiles, ['clean-ts', 'compile-ts', 'concat-compiled-ts', 'compress', 'compile-ts-tests', 'concat-compiled-ts-tests', 'run-unit-tests']);
+    gulp.watch(config.allFiles, ['clean-ts', 'compile-ts', 'concat-compiled-ts', 'compress', 'compile-ts-tests', 'concat-compiled-ts-tests', 'template-cache', 'run-unit-tests']);
 });
 
-gulp.task('default', ['clean-ts', 'compile-ts', 'concat-compiled-ts','compress','compile-ts-tests','concat-compiled-ts-tests', 'run-unit-tests', 'watch']);
+gulp.task('default', ['clean-ts', 'compile-ts', 'concat-compiled-ts','compress','compile-ts-tests','concat-compiled-ts-tests', 'template-cache', 'run-unit-tests', 'watch']);
