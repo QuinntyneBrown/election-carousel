@@ -9,10 +9,8 @@ module ElectionCarousel {
 
         public createInstance = (options: IContainerInstanceOptions) => {
             var instance = new Container();
-            var container = angular.element("<div class='container'></div>");
-            //container.css("height", options.height);
+            var container = angular.element("<div class='container'></div>");            
             container.css("width", options.width);
-            container.css("transition", "all 1s cubic-bezier(.10, .10, .25, .90)");
             options.parentElement.append(container);
             instance.augmentedJQuery = options.parentElement.find(".container");
             return instance;

@@ -57,13 +57,15 @@ body {
     font-weight: 600;
 }
 
+/* carousel */
+
 .container {
     width: 50000px;
     height: 200px;
-    -moz-transition: all .300s cubic-bezier(.10, .10, .25, .90);
-    -ms-transition: all .300s cubic-bezier(.10, .10, .25, .90);
-    -webkit-transition: all .300s cubic-bezier(.10, .10, .25, .90);
-    transition: all .300s cubic-bezier(.10, .10, .25, .90); 
+    -moz-transition: all .500s cubic-bezier(.10, .10, .25, .90);
+    -ms-transition: all .500s cubic-bezier(.10, .10, .25, .90);
+    -webkit-transition: all .500s cubic-bezier(.10, .10, .25, .90);
+    transition: all .500s cubic-bezier(.10, .10, .25, .90); 
 }
 
 .view-port {
@@ -74,11 +76,6 @@ body {
     background-color: #FFF;
 }
 
-.candidate h1 {
-    font-size: 80%;
-    font-weight: 600;
-    line-height: 20px
-}
 
 /* navigation */
 
