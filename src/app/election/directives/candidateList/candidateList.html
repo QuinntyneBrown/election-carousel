@@ -8,8 +8,14 @@
                 <h2>{{ candidate.percentageOfTotalVotes }}</h2>
             </div>
             <div class="right" style="text-align: left;width: 70%;">
-                <h1 data-ng-if="candidate.isElected">{{ candidate.name }} **</h1>
-                <h1 data-ng-if="!candidate.isElected">{{ candidate.name }}</h1>
+                <h1 data-ng-if="candidate.isElected">
+                    <span>{{ ::candidate.firstName }}</span>
+                    <span>{{ ::candidate.lastName }}</span> &#10003;
+                </h1>
+                <h1 data-ng-if="!candidate.isElected">
+                    <span>{{ ::candidate.firstName }}</span>
+                    <span>{{ ::candidate.lastName }}</span>
+                </h1>
                 <h2>{{ candidate.votes }}</h2>
 
             </div>
@@ -22,5 +28,5 @@
 
     <div class="clear"></div>
 
-    <p class="footnote">** Elected</p>
+    <p class="footnote">&#10003; Elected</p>
 </div>

@@ -32,10 +32,8 @@
         public get firstName() { return this.name.split(" ")[0]; }
 
         public get lastName() {
-            var parts = this.name.split(" ");
-            var results = [];
-            for (var i = 1; i < parts.length; i++) { results.push(parts[i]); }
-            return results.join(" ");
+            var indexOfSpace = this.name.indexOf(" ");
+            return this.name.substring(indexOfSpace + 1);
         }
 
         private _votes: number;

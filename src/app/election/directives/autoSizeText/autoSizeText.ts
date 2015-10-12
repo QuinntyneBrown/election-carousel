@@ -14,7 +14,7 @@ module ElectionCarousel {
         public link = (scope: any, element: ng.IAugmentedJQuery, attributes: ng.IAttributes) => {
             var $parent = angular.element(element[0].parentNode);
             var lastParentHeight: number;
-            var maxFontSize = 32;
+            var maxFontSize = Number(attributes["maxFontSize"]);
 
             scope.$$postDigest(() => {
                                 

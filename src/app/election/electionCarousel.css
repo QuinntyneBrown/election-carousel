@@ -58,6 +58,9 @@ h3 {
     font-weight: 600;
 }
 
+.candidate h1 {
+    font-size: 90%;
+}
 /* carousel */
 
 .container {
