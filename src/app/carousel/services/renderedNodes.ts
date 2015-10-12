@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../typings/typescriptapp.d.ts" />
+﻿/// <reference path="../../../../typings/typescriptapp.d.ts" />
 
 module ElectionCarousel {
 
@@ -17,5 +17,5 @@ module ElectionCarousel {
         public container: IContainer;
     }
 
-    angular.module("election-carousel").service("renderedNodes", [RenderedNodes]);
+    angular.module("carousel").service("renderedNodes", [RenderedNodes]);
 } 

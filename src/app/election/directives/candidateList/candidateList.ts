@@ -17,7 +17,7 @@
             candidates:"="
         }
 
-        public templateUrl: string = "src/app/directives/candidateList/candidateList.html";
+        public templateUrl: string = "src/app/election/directives/candidateList/candidateList.html";
 
         public link = (scope: any, element: ng.IAugmentedJQuery, attributes: ng.IAttributes) => {
             

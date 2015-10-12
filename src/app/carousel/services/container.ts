@@ -1,4 +1,5 @@
-﻿/// <reference path="../../../typings/typescriptapp.d.ts" />
+﻿/// <reference path="../../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
 
 module ElectionCarousel {
 
@@ -26,5 +27,5 @@ module ElectionCarousel {
         public get height() { return this.augmentedJQuery.height(); }
     }
 
-    angular.module("election-carousel").service("container", [Container]);
+    angular.module("carousel").service("container", [Container]);
 } 

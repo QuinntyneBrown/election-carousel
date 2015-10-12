@@ -88,12 +88,10 @@
     <Content Include="node_modules\jquery\dist\jquery.js" />
     <Content Include="node_modules\jquery\dist\jquery.min.js" />
     <Content Include="results-2011.js" />
-    <Content Include="src\app\directives\appFooter\appFooter.html" />
-    <Content Include="src\app\directives\appHeader\appHeader.html" />
-    <Content Include="src\app\directives\candidateList\candidateList.html" />
-    <Content Include="src\app\electionCarousel.css" />
+    <Content Include="src\app\election\directives\candidateList\candidateList.html" />
+    <Content Include="src\app\election\electionCarousel.css" />
     <Content Include="src\app\reset.css" />
-    <Content Include="src\app\views\ridings.html" />
+    <Content Include="src\app\election\views\ridings.html" />
     <Content Include="templates.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -101,29 +99,28 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\app\controllers\ridingsController.ts" />
-    <TypeScriptCompile Include="src\app\directives\appFooter\appFooter.ts" />
-    <TypeScriptCompile Include="src\app\directives\appHeader\appHeader.ts" />
-    <TypeScriptCompile Include="src\app\directives\candidateList\candidateList.ts" />
-    <TypeScriptCompile Include="src\app\directives\carousel\carousel.ts" />
-    <TypeScriptCompile Include="src\app\electionCarousel.module.ts" />
-    <TypeScriptCompile Include="src\app\filters\percentage.ts" />
-    <TypeScriptCompile Include="src\app\function\getHtml.ts" />
-    <TypeScriptCompile Include="src\app\function\getX.ts" />
-    <TypeScriptCompile Include="src\app\function\isMobile.ts" />
-    <TypeScriptCompile Include="src\app\function\translateX.ts" />
-    <TypeScriptCompile Include="src\app\services\candidate.ts" />
-    <TypeScriptCompile Include="src\app\services\container.ts" />
-    <TypeScriptCompile Include="src\app\services\localStorageManager.ts" />
-    <TypeScriptCompile Include="src\app\services\navigation.ts" />
-    <TypeScriptCompile Include="src\app\services\party.ts" />
-    <TypeScriptCompile Include="src\app\services\renderedNodes.ts" />
-    <TypeScriptCompile Include="src\app\services\renderer.ts" />
-    <TypeScriptCompile Include="src\app\services\riding.ts" />
-    <TypeScriptCompile Include="src\app\services\ridingsDataService.ts" />
-    <TypeScriptCompile Include="src\app\electionCarousel.states.ts" />
-    <TypeScriptCompile Include="src\app\services\viewPort.ts" />
-    <TypeScriptCompile Include="src\app\services\virtualRenderer.ts" />
+    <TypeScriptCompile Include="src\app\carousel\carousel.module.ts" />
+    <TypeScriptCompile Include="src\app\carousel\directives\carousel\carousel.ts" />
+    <TypeScriptCompile Include="src\app\carousel\services\container.ts" />
+    <TypeScriptCompile Include="src\app\carousel\services\navigation.ts" />
+    <TypeScriptCompile Include="src\app\carousel\services\renderedNodes.ts" />
+    <TypeScriptCompile Include="src\app\carousel\services\renderer.ts" />
+    <TypeScriptCompile Include="src\app\carousel\services\viewPort.ts" />
+    <TypeScriptCompile Include="src\app\carousel\services\virtualRenderer.ts" />
+    <TypeScriptCompile Include="src\app\election\controllers\ridingsController.ts" />
+    <TypeScriptCompile Include="src\app\election\directives\candidateList\candidateList.ts" />
+    <TypeScriptCompile Include="src\app\election\electionCarousel.module.ts" />
+    <TypeScriptCompile Include="src\app\election\filters\percentage.ts" />
+    <TypeScriptCompile Include="src\app\carousel\functions\getHtml.ts" />
+    <TypeScriptCompile Include="src\app\carousel\functions\getX.ts" />
+    <TypeScriptCompile Include="src\app\carousel\functions\isMobile.ts" />
+    <TypeScriptCompile Include="src\app\carousel\functions\translateX.ts" />
+    <TypeScriptCompile Include="src\app\election\services\candidate.ts" />
+    <TypeScriptCompile Include="src\app\election\services\localStorageManager.ts" />
+    <TypeScriptCompile Include="src\app\election\services\party.ts" />
+    <TypeScriptCompile Include="src\app\election\services\riding.ts" />
+    <TypeScriptCompile Include="src\app\election\services\ridingsDataService.ts" />
+    <TypeScriptCompile Include="src\app\election\electionCarousel.states.ts" />
     <TypeScriptCompile Include="test\riding.spec.ts" />
   </ItemGroup>
   <ItemGroup />

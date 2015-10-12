@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../typings/typescriptapp.d.ts" />
+﻿/// <reference path="../../../../typings/typescriptapp.d.ts" />
 
 module ElectionCarousel {
     
@@ -13,5 +13,5 @@ module ElectionCarousel {
         return element;
     }
 
-    angular.module("election-carousel").value("translateX", translateX);
+    angular.module("carousel").value("translateX", translateX);
 } 

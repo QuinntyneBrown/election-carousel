@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../typings/typescriptapp.d.ts" />
+﻿/// <reference path="../../../../typings/typescriptapp.d.ts" />
 
 module ElectionCarousel {
 
@@ -28,5 +28,5 @@ module ElectionCarousel {
 
     }
 
-    angular.module("election-carousel").service("viewPort", [ViewPort]);
+    angular.module("carousel").service("viewPort", [ViewPort]);
 } 

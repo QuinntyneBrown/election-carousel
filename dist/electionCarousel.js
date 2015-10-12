@@ -1,6 +1,11 @@
-/// <reference path="../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../typings/typescriptapp.d.ts" />
+angular.module("carousel", []);
+
+//# sourceMappingURL=carousel.module.js.map
+
+/// <reference path="../../../typings/typescriptapp.d.ts" />
 angular.module("templates", []);
-angular.module("election-carousel", ["ui.router", "templates"])
+angular.module("election-carousel", ["ui.router", "carousel", "templates"])
     .config([
     "$stateProvider", function ($stateProvider) {
         ElectionCarousel.States.configure($stateProvider);
@@ -11,6 +16,7 @@ angular.module("election-carousel", ["ui.router", "templates"])
 
 //# sourceMappingURL=electionCarousel.module.js.map
 
+/// <reference path="../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
@@ -21,7 +27,7 @@ var ElectionCarousel;
             $stateProvider
                 .state("default-empty", {
                 url: "",
-                templateUrl: "src/app/views/ridings.html",
+                templateUrl: "src/app/election/views/ridings.html",
                 resolve: {
                     ridings: [
                         "$q", "riding", "ridingDataService", function ($q, riding, ridingDataService) {
@@ -43,7 +49,7 @@ var ElectionCarousel;
             $stateProvider
                 .state("default", {
                 url: "",
-                templateUrl: "src/app/views/ridings.html",
+                templateUrl: "src/app/election/views/ridings.html",
                 resolve: {
                     ridings: [
                         "$q", "riding", "ridingDataService", function ($q, riding, ridingDataService) {
@@ -70,23 +76,7 @@ var ElectionCarousel;
 
 //# sourceMappingURL=electionCarousel.states.js.map
 
-/// <reference path="../../../typings/typescriptapp.d.ts" />
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    "use strict";
-    var RidingsController = (function () {
-        function RidingsController(ridings) {
-            this.ridings = ridings;
-        }
-        return RidingsController;
-    })();
-    ElectionCarousel.RidingsController = RidingsController;
-    angular.module("election-carousel").controller("ridingsController", ["ridings", RidingsController]);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=ridingsController.js.map
-
-/// <reference path="../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
@@ -103,12 +93,12 @@ var ElectionCarousel;
         el = null;
         return txt;
     };
-    angular.module("election-carousel").value("getHtml", getHtml);
+    angular.module("carousel").value("getHtml", getHtml);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=getHtml.js.map
 
-/// <reference path="../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     ElectionCarousel.getX = function (element) {
@@ -118,23 +108,23 @@ var ElectionCarousel;
         var result = JSON.parse(transform.replace(/^\w+\(/, "[").replace(/\)$/, "]"));
         return JSON.parse(transform.replace(/^\w+\(/, "[").replace(/\)$/, "]"))[4];
     };
-    angular.module("election-carousel").value("getX", ElectionCarousel.getX);
+    angular.module("carousel").value("getX", ElectionCarousel.getX);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=getX.js.map
 
-/// <reference path="../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     ElectionCarousel.isMobile = function () {
         return window.innerWidth < 768;
     };
-    angular.module("election-carousel").value("isMobile", ElectionCarousel.isMobile);
+    angular.module("carousel").value("isMobile", ElectionCarousel.isMobile);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=isMobile.js.map
 
-/// <reference path="../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     ElectionCarousel.translateX = function (element, value) {
@@ -146,86 +136,13 @@ var ElectionCarousel;
         });
         return element;
     };
-    angular.module("election-carousel").value("translateX", ElectionCarousel.translateX);
+    angular.module("carousel").value("translateX", ElectionCarousel.translateX);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=translateX.js.map
 
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    "use strict";
-    var Candidate = (function () {
-        function Candidate($injector, percentageFilter) {
-            var _this = this;
-            this.$injector = $injector;
-            this.percentageFilter = percentageFilter;
-            this.createInstance = function (options) {
-                var instance = new Candidate(_this.$injector, _this.percentageFilter);
-                instance.party = _this.$injector.get("party").createInstance({ partyCode: options.data.partyCode });
-                instance.name = options.data.name;
-                instance.votes = options.data.votes;
-                instance.isElected = options.data.isElected;
-                instance.totalVotes = options.totalVotes;
-                return instance;
-            };
-        }
-        Object.defineProperty(Candidate.prototype, "totalVotes", {
-            get: function () { return this._totalVotes; },
-            set: function (value) { this._totalVotes = value; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Candidate.prototype, "name", {
-            get: function () { return this._name; },
-            set: function (value) { this._name = value; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Candidate.prototype, "firstName", {
-            get: function () { return this.name.split(" ")[0]; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Candidate.prototype, "lastName", {
-            get: function () {
-                var parts = this.name.split(" ");
-                var results = [];
-                for (var i = 1; i < parts.length; i++) {
-                    results.push(parts[i]);
-                }
-                return results.join(" ");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Candidate.prototype, "votes", {
-            get: function () { return this._votes; },
-            set: function (value) { this._votes = value; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Candidate.prototype, "percentageOfTotalVotes", {
-            get: function () {
-                return this.percentageFilter(this._votes / this.totalVotes);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Candidate.prototype, "party", {
-            get: function () { return this._party; },
-            set: function (value) { this._party = value; },
-            enumerable: true,
-            configurable: true
-        });
-        return Candidate;
-    })();
-    ElectionCarousel.Candidate = Candidate;
-    angular.module("election-carousel").service("candidate", ["$injector", "percentageFilter", Candidate]);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=candidate.js.map
-
-/// <reference path="../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
@@ -258,87 +175,12 @@ var ElectionCarousel;
         return Container;
     })();
     ElectionCarousel.Container = Container;
-    angular.module("election-carousel").service("container", [Container]);
+    angular.module("carousel").service("container", [Container]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=container.js.map
 
-/// <reference path="../../../typings/typescriptapp.d.ts" />
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    angular.module("election-carousel").value("localStorage", localStorage);
-    var LocalStorageManager = (function () {
-        function LocalStorageManager($window, localStorage) {
-            var _this = this;
-            this.$window = $window;
-            this.localStorage = localStorage;
-            this.createInstance = function (options) {
-                var instance = new LocalStorageManager(_this.$window, _this.localStorage);
-                if (options && options.storageId) {
-                    instance.storageId = options.storageId;
-                }
-                else {
-                    instance.storageId = "localStorage";
-                }
-                return instance;
-            };
-            this._items = null;
-            this.get = function () {
-                if (_this._items) {
-                    return _this._items;
-                }
-                var storageEntry = _this.localStorage.getItem(_this._storageId);
-                if (storageEntry === "undefined" || storageEntry === null || storageEntry === "null") {
-                    _this._items = [];
-                }
-                else {
-                    _this._items = JSON.parse(storageEntry);
-                }
-                return _this._items;
-            };
-            this.getByName = function (options) {
-                var items = _this.get();
-                var storageItem = null;
-                items.forEach(function (item) {
-                    if (options.name === item.name) {
-                        storageItem = item;
-                    }
-                });
-                return storageItem;
-            };
-            this.put = function (options) {
-                var items = _this.get();
-                var itemExist = false;
-                items.forEach(function (item) {
-                    if (options.name === item.name) {
-                        itemExist = true;
-                        item.value = options.value;
-                        item.category = options.category;
-                    }
-                });
-                if (!itemExist) {
-                    items.push(options);
-                }
-            };
-            $window.onbeforeunload = function () {
-                _this.localStorage.setItem(_this._storageId, JSON.stringify(_this._items));
-            };
-        }
-        Object.defineProperty(LocalStorageManager.prototype, "storageId", {
-            get: function () { return this._storageId; },
-            set: function (value) { this._storageId = value; },
-            enumerable: true,
-            configurable: true
-        });
-        return LocalStorageManager;
-    })();
-    ElectionCarousel.LocalStorageManager = LocalStorageManager;
-    angular.module("election-carousel").service("localStorageManager", ["$window", "localStorage", LocalStorageManager]);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=localStorageManager.js.map
-
-/// <reference path="../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
@@ -363,65 +205,12 @@ var ElectionCarousel;
         return Navigation;
     })();
     ElectionCarousel.Navigation = Navigation;
-    angular.module("election-carousel").service("navigation", ["$compile", Navigation]);
+    angular.module("carousel").service("navigation", ["$compile", Navigation]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=navigation.js.map
 
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    "use strict";
-    var Party = (function () {
-        function Party() {
-            this.createInstance = function (options) {
-                var instance = new Party();
-                instance.partyCode = options.partyCode;
-                instance.id = options.id;
-                return instance;
-            };
-        }
-        Object.defineProperty(Party.prototype, "id", {
-            get: function () { return this._id; },
-            set: function (value) { this._id = value; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Party.prototype, "name", {
-            get: function () { return this._name; },
-            set: function (value) { this._name = value; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Party.prototype, "colorCode", {
-            get: function () {
-                if (this.partyCode == "NDP")
-                    return "#ED5C27";
-                if (this.partyCode == "PC")
-                    return "#0C499C";
-                if (this.partyCode == "LIB")
-                    return "#D71920";
-                if (this.partyCode == "GRN")
-                    return "#4C9F45";
-                return "#666";
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Party.prototype, "partyCode", {
-            get: function () { return this._partyCode; },
-            set: function (value) { this._partyCode = value; },
-            enumerable: true,
-            configurable: true
-        });
-        return Party;
-    })();
-    ElectionCarousel.Party = Party;
-    angular.module("election-carousel").service("party", [Party]);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=party.js.map
-
-/// <reference path="../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
@@ -436,12 +225,12 @@ var ElectionCarousel;
         return RenderedNodes;
     })();
     ElectionCarousel.RenderedNodes = RenderedNodes;
-    angular.module("election-carousel").service("renderedNodes", [RenderedNodes]);
+    angular.module("carousel").service("renderedNodes", [RenderedNodes]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=renderedNodes.js.map
 
-/// <reference path="../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
@@ -551,119 +340,12 @@ var ElectionCarousel;
         return Renderer;
     })();
     ElectionCarousel.Renderer = Renderer;
-    angular.module("election-carousel").service("renderer", ["$compile", "$injector", "$timeout", "getX", "translateX", Renderer]);
+    angular.module("carousel").service("renderer", ["$compile", "$injector", "$timeout", "getX", "translateX", Renderer]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=renderer.js.map
 
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    "use strict";
-    var Riding = (function () {
-        function Riding(candidate) {
-            var _this = this;
-            this.candidate = candidate;
-            this.createInstance = function (options) {
-                var instance = new Riding(_this.candidate);
-                instance.id = options.data.id;
-                instance.name = options.data.name;
-                for (var i = 0; i < options.data.results.length; i++) {
-                    instance.totalVotes = instance.totalVotes + options.data.results[i].votes;
-                }
-                for (var i = 0; i < options.data.results.length; i++) {
-                    var candidate = _this.candidate.createInstance({ totalVotes: instance.totalVotes, data: options.data.results[i] });
-                    var candidates = instance.candidates;
-                    candidates.push(candidate);
-                    instance.candidates = candidates;
-                    if (options.data.results[i].isElected)
-                        instance.winningCandidate = candidate;
-                }
-                return instance;
-            };
-            this._candidates = [];
-            this._totalVotes = 0;
-        }
-        Object.defineProperty(Riding.prototype, "id", {
-            get: function () { return this._id; },
-            set: function (value) { this._id = value; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Riding.prototype, "name", {
-            get: function () { return this._name; },
-            set: function (value) { this._name = value; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Riding.prototype, "candidates", {
-            get: function () {
-                return this._candidates.sort(function (a, b) { return b.votes - a.votes; });
-            },
-            set: function (value) { this._candidates = value; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Riding.prototype, "totalVotes", {
-            get: function () { return this._totalVotes; },
-            set: function (value) { this._totalVotes = value; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Riding.prototype, "winningCandidate", {
-            get: function () { return this._winningCandidate; },
-            set: function (value) { this._winningCandidate = value; },
-            enumerable: true,
-            configurable: true
-        });
-        return Riding;
-    })();
-    ElectionCarousel.Riding = Riding;
-    angular.module("election-carousel").service("riding", ["candidate", Riding]);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=riding.js.map
-
-/// <reference path="../../../typings/typescriptapp.d.ts" />
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    "use strict";
-    var RidingsDataService = (function () {
-        function RidingsDataService($http, $q, localStorageManager) {
-            var _this = this;
-            this.$http = $http;
-            this.$q = $q;
-            this.getAll = function () {
-                var url = "http://static.globalnews.ca/content/test/results-2011.js";
-                var deferred = _this.$q.defer();
-                var cachedData = _this.localStorageManager.getByName({ name: url });
-                if (!cachedData) {
-                    jQuery.ajax({
-                        type: 'GET',
-                        url: url,
-                        jsonpCallback: 'gNews_getRidingDetailsCallback',
-                        dataType: 'jsonp',
-                        success: function (results) {
-                            _this.localStorageManager.put({ name: url, value: results });
-                            deferred.resolve(results);
-                        }
-                    });
-                }
-                else {
-                    deferred.resolve(cachedData.value);
-                }
-                return deferred.promise;
-            };
-            this.localStorageManager = localStorageManager.createInstance({ storageId: "election-carousel" });
-        }
-        return RidingsDataService;
-    })();
-    ElectionCarousel.RidingsDataService = RidingsDataService;
-    angular.module("election-carousel").service("ridingDataService", ["$http", "$q", "localStorageManager", RidingsDataService]);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=ridingsDataService.js.map
-
-/// <reference path="../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
@@ -694,12 +376,12 @@ var ElectionCarousel;
         return ViewPort;
     })();
     ElectionCarousel.ViewPort = ViewPort;
-    angular.module("election-carousel").service("viewPort", [ViewPort]);
+    angular.module("carousel").service("viewPort", [ViewPort]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=viewPort.js.map
 
-/// <reference path="../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
@@ -807,12 +489,28 @@ var ElectionCarousel;
         return VirtualRenderer;
     })();
     ElectionCarousel.VirtualRenderer = VirtualRenderer;
-    angular.module("election-carousel").service("virtualRenderer", ["$compile", "$injector", "$timeout", "getX", "translateX", VirtualRenderer]);
+    angular.module("carousel").service("virtualRenderer", ["$compile", "$injector", "$timeout", "getX", "translateX", VirtualRenderer]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=virtualRenderer.js.map
 
-/// <reference path="../../../typings/typescriptapp.d.ts" />
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var RidingsController = (function () {
+        function RidingsController(ridings) {
+            this.ridings = ridings;
+        }
+        return RidingsController;
+    })();
+    ElectionCarousel.RidingsController = RidingsController;
+    angular.module("election-carousel").controller("ridingsController", ["ridings", RidingsController]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=ridingsController.js.map
+
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
@@ -830,55 +528,314 @@ var ElectionCarousel;
 
 var ElectionCarousel;
 (function (ElectionCarousel) {
-    var Directives;
-    (function (Directives) {
-        var AppHeader = (function () {
-            function AppHeader() {
-                this.restrict = "E";
-                this.replace = true;
-                this.templateUrl = "src/app/directives/appHeader/appHeader.html";
-                this.link = function (scope, element, attributes) {
-                };
-            }
-            AppHeader.createInstance = function () {
-                return new AppHeader();
+    "use strict";
+    var Candidate = (function () {
+        function Candidate($injector, percentageFilter) {
+            var _this = this;
+            this.$injector = $injector;
+            this.percentageFilter = percentageFilter;
+            this.createInstance = function (options) {
+                var instance = new Candidate(_this.$injector, _this.percentageFilter);
+                instance.party = _this.$injector.get("party").createInstance({ partyCode: options.data.partyCode });
+                instance.name = options.data.name;
+                instance.votes = options.data.votes;
+                instance.isElected = options.data.isElected;
+                instance.totalVotes = options.totalVotes;
+                return instance;
             };
-            return AppHeader;
-        })();
-        Directives.AppHeader = AppHeader;
-    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
+        }
+        Object.defineProperty(Candidate.prototype, "totalVotes", {
+            get: function () { return this._totalVotes; },
+            set: function (value) { this._totalVotes = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "name", {
+            get: function () { return this._name; },
+            set: function (value) { this._name = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "firstName", {
+            get: function () { return this.name.split(" ")[0]; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "lastName", {
+            get: function () {
+                var parts = this.name.split(" ");
+                var results = [];
+                for (var i = 1; i < parts.length; i++) {
+                    results.push(parts[i]);
+                }
+                return results.join(" ");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "votes", {
+            get: function () { return this._votes; },
+            set: function (value) { this._votes = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "percentageOfTotalVotes", {
+            get: function () {
+                return this.percentageFilter(this._votes / this.totalVotes);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Candidate.prototype, "party", {
+            get: function () { return this._party; },
+            set: function (value) { this._party = value; },
+            enumerable: true,
+            configurable: true
+        });
+        return Candidate;
+    })();
+    ElectionCarousel.Candidate = Candidate;
+    angular.module("election-carousel").service("candidate", ["$injector", "percentageFilter", Candidate]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
-//# sourceMappingURL=appHeader.js.map
+//# sourceMappingURL=candidate.js.map
+
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    angular.module("election-carousel").value("localStorage", localStorage);
+    var LocalStorageManager = (function () {
+        function LocalStorageManager($window, localStorage) {
+            var _this = this;
+            this.$window = $window;
+            this.localStorage = localStorage;
+            this.createInstance = function (options) {
+                var instance = new LocalStorageManager(_this.$window, _this.localStorage);
+                if (options && options.storageId) {
+                    instance.storageId = options.storageId;
+                }
+                else {
+                    instance.storageId = "localStorage";
+                }
+                return instance;
+            };
+            this._items = null;
+            this.get = function () {
+                if (_this._items) {
+                    return _this._items;
+                }
+                var storageEntry = _this.localStorage.getItem(_this._storageId);
+                if (storageEntry === "undefined" || storageEntry === null || storageEntry === "null") {
+                    _this._items = [];
+                }
+                else {
+                    _this._items = JSON.parse(storageEntry);
+                }
+                return _this._items;
+            };
+            this.getByName = function (options) {
+                var items = _this.get();
+                var storageItem = null;
+                items.forEach(function (item) {
+                    if (options.name === item.name) {
+                        storageItem = item;
+                    }
+                });
+                return storageItem;
+            };
+            this.put = function (options) {
+                var items = _this.get();
+                var itemExist = false;
+                items.forEach(function (item) {
+                    if (options.name === item.name) {
+                        itemExist = true;
+                        item.value = options.value;
+                        item.category = options.category;
+                    }
+                });
+                if (!itemExist) {
+                    items.push(options);
+                }
+            };
+            $window.onbeforeunload = function () {
+                _this.localStorage.setItem(_this._storageId, JSON.stringify(_this._items));
+            };
+        }
+        Object.defineProperty(LocalStorageManager.prototype, "storageId", {
+            get: function () { return this._storageId; },
+            set: function (value) { this._storageId = value; },
+            enumerable: true,
+            configurable: true
+        });
+        return LocalStorageManager;
+    })();
+    ElectionCarousel.LocalStorageManager = LocalStorageManager;
+    angular.module("election-carousel").service("localStorageManager", ["$window", "localStorage", LocalStorageManager]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=localStorageManager.js.map
 
 var ElectionCarousel;
 (function (ElectionCarousel) {
-    var Directives;
-    (function (Directives) {
-        var CandidateList = (function () {
-            function CandidateList() {
-                this.restrict = "E";
-                this.replace = true;
-                this.scope = {
-                    candidates: "="
-                };
-                this.templateUrl = "src/app/directives/candidateList/candidateList.html";
-                this.link = function (scope, element, attributes) {
-                };
-            }
-            CandidateList.createInstance = function () {
-                return new CandidateList();
+    "use strict";
+    var Party = (function () {
+        function Party() {
+            this.createInstance = function (options) {
+                var instance = new Party();
+                instance.partyCode = options.partyCode;
+                instance.id = options.id;
+                return instance;
             };
-            return CandidateList;
-        })();
-        Directives.CandidateList = CandidateList;
-        angular.module("election-carousel").directive("candidateList", [CandidateList.createInstance]);
-    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
+        }
+        Object.defineProperty(Party.prototype, "id", {
+            get: function () { return this._id; },
+            set: function (value) { this._id = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Party.prototype, "name", {
+            get: function () { return this._name; },
+            set: function (value) { this._name = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Party.prototype, "colorCode", {
+            get: function () {
+                if (this.partyCode == "NDP")
+                    return "#ED5C27";
+                if (this.partyCode == "PC")
+                    return "#0C499C";
+                if (this.partyCode == "LIB")
+                    return "#D71920";
+                if (this.partyCode == "GRN")
+                    return "#4C9F45";
+                return "#666";
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Party.prototype, "partyCode", {
+            get: function () { return this._partyCode; },
+            set: function (value) { this._partyCode = value; },
+            enumerable: true,
+            configurable: true
+        });
+        return Party;
+    })();
+    ElectionCarousel.Party = Party;
+    angular.module("election-carousel").service("party", [Party]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
-//# sourceMappingURL=candidateList.js.map
+//# sourceMappingURL=party.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var Riding = (function () {
+        function Riding(candidate) {
+            var _this = this;
+            this.candidate = candidate;
+            this.createInstance = function (options) {
+                var instance = new Riding(_this.candidate);
+                instance.id = options.data.id;
+                instance.name = options.data.name;
+                for (var i = 0; i < options.data.results.length; i++) {
+                    instance.totalVotes = instance.totalVotes + options.data.results[i].votes;
+                }
+                for (var i = 0; i < options.data.results.length; i++) {
+                    var candidate = _this.candidate.createInstance({ totalVotes: instance.totalVotes, data: options.data.results[i] });
+                    var candidates = instance.candidates;
+                    candidates.push(candidate);
+                    instance.candidates = candidates;
+                    if (options.data.results[i].isElected)
+                        instance.winningCandidate = candidate;
+                }
+                return instance;
+            };
+            this._candidates = [];
+            this._totalVotes = 0;
+        }
+        Object.defineProperty(Riding.prototype, "id", {
+            get: function () { return this._id; },
+            set: function (value) { this._id = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Riding.prototype, "name", {
+            get: function () { return this._name; },
+            set: function (value) { this._name = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Riding.prototype, "candidates", {
+            get: function () {
+                return this._candidates.sort(function (a, b) { return b.votes - a.votes; });
+            },
+            set: function (value) { this._candidates = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Riding.prototype, "totalVotes", {
+            get: function () { return this._totalVotes; },
+            set: function (value) { this._totalVotes = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Riding.prototype, "winningCandidate", {
+            get: function () { return this._winningCandidate; },
+            set: function (value) { this._winningCandidate = value; },
+            enumerable: true,
+            configurable: true
+        });
+        return Riding;
+    })();
+    ElectionCarousel.Riding = Riding;
+    angular.module("election-carousel").service("riding", ["candidate", Riding]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=riding.js.map
 
 /// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var RidingsDataService = (function () {
+        function RidingsDataService($http, $q, localStorageManager) {
+            var _this = this;
+            this.$http = $http;
+            this.$q = $q;
+            this.getAll = function () {
+                var url = "http://static.globalnews.ca/content/test/results-2011.js";
+                var deferred = _this.$q.defer();
+                var cachedData = _this.localStorageManager.getByName({ name: url });
+                if (!cachedData) {
+                    jQuery.ajax({
+                        type: 'GET',
+                        url: url,
+                        jsonpCallback: 'gNews_getRidingDetailsCallback',
+                        dataType: 'jsonp',
+                        success: function (results) {
+                            _this.localStorageManager.put({ name: url, value: results });
+                            deferred.resolve(results);
+                        }
+                    });
+                }
+                else {
+                    deferred.resolve(cachedData.value);
+                }
+                return deferred.promise;
+            };
+            this.localStorageManager = localStorageManager.createInstance({ storageId: "election-carousel" });
+        }
+        return RidingsDataService;
+    })();
+    ElectionCarousel.RidingsDataService = RidingsDataService;
+    angular.module("election-carousel").service("ridingDataService", ["$http", "$q", "localStorageManager", RidingsDataService]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=ridingsDataService.js.map
+
+/// <reference path="../../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     var Carousel = (function () {
@@ -948,7 +905,7 @@ var ElectionCarousel;
         return Carousel;
     })();
     ElectionCarousel.Carousel = Carousel;
-    angular.module("election-carousel").directive("carousel", ["$interval", "getHtml", "renderer", Carousel.createInstance]);
+    angular.module("carousel").directive("carousel", ["$interval", "getHtml", "renderer", Carousel.createInstance]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=carousel.js.map
@@ -957,21 +914,25 @@ var ElectionCarousel;
 (function (ElectionCarousel) {
     var Directives;
     (function (Directives) {
-        var AppFooter = (function () {
-            function AppFooter() {
+        var CandidateList = (function () {
+            function CandidateList() {
                 this.restrict = "E";
                 this.replace = true;
-                this.templateUrl = "src/app/directives/appFooter/appFooter.html";
+                this.scope = {
+                    candidates: "="
+                };
+                this.templateUrl = "src/app/election/directives/candidateList/candidateList.html";
                 this.link = function (scope, element, attributes) {
                 };
             }
-            AppFooter.createInstance = function () {
-                return new AppFooter();
+            CandidateList.createInstance = function () {
+                return new CandidateList();
             };
-            return AppFooter;
+            return CandidateList;
         })();
-        Directives.AppFooter = AppFooter;
+        Directives.CandidateList = CandidateList;
+        angular.module("election-carousel").directive("candidateList", [CandidateList.createInstance]);
     })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
 })(ElectionCarousel || (ElectionCarousel = {}));
 
-//# sourceMappingURL=appFooter.js.map
+//# sourceMappingURL=candidateList.js.map

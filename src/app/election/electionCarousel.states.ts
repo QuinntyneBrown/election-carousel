@@ -1,4 +1,6 @@
-﻿module ElectionCarousel {
+﻿/// <reference path="../../../typings/typescriptapp.d.ts" />
+
+module ElectionCarousel {
 
     "use strict";
 
@@ -9,7 +11,7 @@
                 .state("default-empty",
                     {
                         url: "",
-                        templateUrl: "src/app/views/ridings.html",
+                        templateUrl: "src/app/election/views/ridings.html",
                         resolve: {
                             ridings: [
                                 "$q", "riding", "ridingDataService", ($q: ng.IQService, riding: IRiding, ridingDataService: IRidingsDataService) => {
@@ -36,7 +38,7 @@
                 .state("default",
                     {
                         url: "",
-                        templateUrl: "src/app/views/ridings.html",
+                        templateUrl: "src/app/election/views/ridings.html",
                         resolve: {
                             ridings: [
                                 "$q", "riding", "ridingDataService", ($q: ng.IQService, riding: IRiding, ridingDataService: IRidingsDataService) => {

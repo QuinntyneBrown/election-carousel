@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../typings/typescriptapp.d.ts" />
+﻿/// <reference path="../../../../typings/typescriptapp.d.ts" />
 
 module ElectionCarousel {
 
@@ -6,5 +6,5 @@ module ElectionCarousel {
         return window.innerWidth < 768;
     }
 
-    angular.module("election-carousel").value("isMobile", isMobile);
+    angular.module("carousel").value("isMobile", isMobile);
 } 

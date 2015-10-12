@@ -1,16 +1,16 @@
-﻿/// <reference path="../../../typings/typescriptapp.d.ts" />
+﻿/// <reference path="../../../../typings/typescriptapp.d.ts" />
 
 module ElectionCarousel {
 
     "use strict";
 
-    export class Renderer implements IRenderer {
-        
+    export class VirtualRenderer implements IRenderer {
+
         constructor(private $compile: ng.ICompileService,
             private $injector: ng.auto.IInjectorService,
             private $timeout: ng.ITimeoutService,
             private getX: IGetX,
-            private translateX:ITranslateX) { }
+            private translateX: ITranslateX) { }
 
         public createInstance = (options: IRendererInstanceOptions) => {
             var instance = new Renderer(this.$compile, this.$injector, this.$timeout, this.getX, this.translateX);
@@ -41,8 +41,6 @@ module ElectionCarousel {
             }, 10);
 
             instance.container = (<IContainer>this.$injector.get("container")).createInstance({
-                height: Number(options.attributes["carouselHeight"]),
-                width: Number(options.attributes["carouselWidth"]) * options.items.length,
                 parentElement: instance.viewPort.augmentedJQuery
             });
 
@@ -72,7 +70,7 @@ module ElectionCarousel {
         public reRender = () => {
             this.translateX(this.container.htmlElement, 0);
             if (!this.scope.$$phase)
-                this.scope.$digest();    
+                this.scope.$digest();
         }
 
         public renderNext = () => {
@@ -87,7 +85,7 @@ module ElectionCarousel {
                 } else {
                     this.translateX(this.container.htmlElement, x - this.lastViewPortWidth);
                 }
-                
+
             }
 
         }
@@ -99,7 +97,7 @@ module ElectionCarousel {
 
                 var x = this.getX(this.container.htmlElement);
 
-                if (x === 0){
+                if (x === 0) {
                     this.translateX(this.container.augmentedJQuery[0], x + (this.items.length * (-this.lastViewPortWidth)) + this.lastViewPortWidth);
                 } else {
                     this.translateX(this.container.augmentedJQuery[0], x + this.lastViewPortWidth);
@@ -134,13 +132,13 @@ module ElectionCarousel {
 
         public inTransition = false;
 
-        public lastViewPortWidth:number = 0;
+        public lastViewPortWidth: number = 0;
 
         public _guid: string;
 
         public get guid() { return this._guid; }
 
-        public set guid(value:string) { this._guid = value; }
+        public set guid(value: string) { this._guid = value; }
 
         public parentElement: ng.IAugmentedJQuery;
 
@@ -149,8 +147,8 @@ module ElectionCarousel {
         public viewPort: IViewPort;
 
         public navigation: INavigation;
-        
+
     }
 
-    angular.module("election-carousel").service("renderer", ["$compile", "$injector", "$timeout","getX","translateX",Renderer]);
+    angular.module("carousel").service("virtualRenderer", ["$compile", "$injector", "$timeout", "getX", "translateX", VirtualRenderer]);
 } 

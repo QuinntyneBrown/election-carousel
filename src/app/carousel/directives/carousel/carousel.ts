@@ -1,4 +1,5 @@
-﻿/// <reference path="../../../../typings/typescriptapp.d.ts" />
+﻿
+/// <reference path="../../../../../typings/typescriptapp.d.ts" />
 
 module ElectionCarousel {
     
@@ -76,5 +77,5 @@ module ElectionCarousel {
 
     }
 
-    angular.module("election-carousel").directive("carousel", ["$interval","getHtml","renderer",Carousel.createInstance]);
+    angular.module("carousel").directive("carousel", ["$interval","getHtml","renderer",Carousel.createInstance]);
 } 
