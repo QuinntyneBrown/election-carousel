@@ -62,8 +62,8 @@ declare module ElectionCarousel {
     }
 
     export interface IViewPortInstanceOptions {
-        width: number;
-        height: number;
+        width?: number;
+        height?: number;
         parentElement: ng.IAugmentedJQuery;
     }
 

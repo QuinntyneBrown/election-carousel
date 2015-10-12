@@ -10,9 +10,11 @@ module ElectionCarousel {
         public createInstance = (options: IViewPortInstanceOptions) => {
             var instance = new ViewPort();
             var viewPort = angular.element("<div class='view-port'></div>");
+            var previousArrow = angular.element("<div class='previous-arrow'></div>");
+            var nextArrow = angular.element("<div class='next-arrow'></div>");
+            viewPort.append(previousArrow);
+            viewPort.append(nextArrow);
             viewPort.css("overflowX", "hidden");
-            viewPort.css("height", options.height);
-            viewPort.css("width", options.width);
             options.parentElement.append(viewPort);
             instance.augmentedJQuery = options.parentElement.find(".view-port");
             return instance;
