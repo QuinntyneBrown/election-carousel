@@ -1,26 +1,26 @@
 ﻿<div style="width:100%">
-    
+
     <div data-ng-repeat="candidate in candidates" style="position: relative; float: left; min-width: 275px;">
-        
+
         <div class="candidate" style="width: 100%; padding-bottom: 15px;">
             <div class="left" style="width:40px; padding: 15px; color: #FFF; font-weight: 600"
                  data-ng-style="{ backgroundColor: candidate.party.colorCode }">
                 <h2>{{ candidate.percentageOfTotalVotes }}</h2>
             </div>
-            <div class="right" style="text-align: left;width: 70%;" >
+            <div class="right" style="text-align: left;width: 70%;">
                 <h1 data-ng-if="candidate.isElected">{{ candidate.name }} **</h1>
                 <h1 data-ng-if="!candidate.isElected">{{ candidate.name }}</h1>
                 <h2>{{ candidate.votes }}</h2>
-                
+
             </div>
             <div class="clear">
             </div>
         </div>
-            
-        
-    </div>    
-    
+
+
+    </div>
+
     <div class="clear"></div>
-    
-    <p class="footnote">** Elected</p> 
+
+    <p class="footnote">** Elected</p>
 </div>

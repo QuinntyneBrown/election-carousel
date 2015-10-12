@@ -5,7 +5,7 @@ angular.module("carousel", []);
 
 /// <reference path="../../../typings/typescriptapp.d.ts" />
 angular.module("templates", []);
-angular.module("election-carousel", ["ui.router", "carousel", "templates"])
+angular.module("election", ["ui.router", "carousel", "templates"])
     .config([
     "$stateProvider", function ($stateProvider) {
         ElectionCarousel.States.configure($stateProvider);
@@ -14,7 +14,7 @@ angular.module("election-carousel", ["ui.router", "carousel", "templates"])
         FastClick.attach(document.body);
     }]);
 
-//# sourceMappingURL=electionCarousel.module.js.map
+//# sourceMappingURL=election.module.js.map
 
 /// <reference path="../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
@@ -74,72 +74,7 @@ var ElectionCarousel;
     ElectionCarousel.States = States;
 })(ElectionCarousel || (ElectionCarousel = {}));
 
-//# sourceMappingURL=electionCarousel.states.js.map
-
-/// <reference path="../../../../typings/typescriptapp.d.ts" />
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    "use strict";
-    var getHtml = function (who, deep) {
-        if (!who || !who.tagName)
-            return '';
-        var txt, ax, el = document.createElement("div");
-        el.appendChild(who.cloneNode(false));
-        txt = el.innerHTML;
-        if (deep) {
-            ax = txt.indexOf('>') + 1;
-            txt = txt.substring(0, ax) + who.innerHTML + txt.substring(ax);
-        }
-        el = null;
-        return txt;
-    };
-    angular.module("carousel").value("getHtml", getHtml);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=getHtml.js.map
-
-/// <reference path="../../../../typings/typescriptapp.d.ts" />
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    ElectionCarousel.getX = function (element) {
-        var transform = angular.element(element).css("transform");
-        if (transform === "none")
-            return 0;
-        var result = JSON.parse(transform.replace(/^\w+\(/, "[").replace(/\)$/, "]"));
-        return JSON.parse(transform.replace(/^\w+\(/, "[").replace(/\)$/, "]"))[4];
-    };
-    angular.module("carousel").value("getX", ElectionCarousel.getX);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=getX.js.map
-
-/// <reference path="../../../../typings/typescriptapp.d.ts" />
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    ElectionCarousel.isMobile = function () {
-        return window.innerWidth < 768;
-    };
-    angular.module("carousel").value("isMobile", ElectionCarousel.isMobile);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=isMobile.js.map
-
-/// <reference path="../../../../typings/typescriptapp.d.ts" />
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    ElectionCarousel.translateX = function (element, value) {
-        angular.element(element).css({
-            "-moz-transform": "translateX(" + value + "px)",
-            "-webkit-transform": "translateX(" + value + "px)",
-            "-ms-transform": "translateX(" + value + "px)",
-            "-transform": "translateX(" + value + "px)"
-        });
-        return element;
-    };
-    angular.module("carousel").value("translateX", ElectionCarousel.translateX);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=translateX.js.map
+//# sourceMappingURL=election.states.js.map
 
 /// <reference path="../../../../typings/typescriptapp.d.ts" />
 /// <reference path="../../../../typings/typescriptapp.d.ts" />
@@ -235,15 +170,16 @@ var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
     var Renderer = (function () {
-        function Renderer($compile, $injector, $timeout, getX, translateX) {
+        function Renderer($compile, $injector, $interval, $timeout, getX, translateX) {
             var _this = this;
             this.$compile = $compile;
             this.$injector = $injector;
+            this.$interval = $interval;
             this.$timeout = $timeout;
             this.getX = getX;
             this.translateX = translateX;
             this.createInstance = function (options) {
-                var instance = new Renderer(_this.$compile, _this.$injector, _this.$timeout, _this.getX, _this.translateX);
+                var instance = new Renderer(_this.$compile, _this.$injector, _this.$interval, _this.$timeout, _this.getX, _this.translateX);
                 instance.template = options.template;
                 instance.items = options.items;
                 instance.itemName = options.itemName;
@@ -256,18 +192,18 @@ var ElectionCarousel;
                     parentElement: options.parentElement
                 });
                 instance.lastViewPortWidth = instance.viewPort.width;
-                setInterval(function () {
+                instance.$interval(function () {
                     if (instance.lastViewPortWidth != instance.viewPort.width) {
                         instance.lastViewPortWidth = instance.viewPort.width;
                         instance.reRender();
                     }
-                }, 10);
+                }, 10, null, false);
                 instance.container = _this.$injector.get("container").createInstance({
                     height: Number(options.attributes["carouselHeight"]),
                     width: Number(options.attributes["carouselWidth"]) * options.items.length,
                     parentElement: instance.viewPort.augmentedJQuery
                 });
-                instance.container.htmlElement.addEventListener('transitionend', function () {
+                instance.container.htmlElement.addEventListener("transitionend", function () {
                     instance.inTransition = false;
                 });
                 instance.navigation = _this.$injector.get("navigation").createInstance({
@@ -340,7 +276,7 @@ var ElectionCarousel;
         return Renderer;
     })();
     ElectionCarousel.Renderer = Renderer;
-    angular.module("carousel").service("renderer", ["$compile", "$injector", "$timeout", "getX", "translateX", Renderer]);
+    angular.module("carousel").service("renderer", ["$compile", "$injector", "$interval", "$timeout", "getX", "translateX", Renderer]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=renderer.js.map
@@ -394,7 +330,7 @@ var ElectionCarousel;
             this.getX = getX;
             this.translateX = translateX;
             this.createInstance = function (options) {
-                var instance = new ElectionCarousel.Renderer(_this.$compile, _this.$injector, _this.$timeout, _this.getX, _this.translateX);
+                var instance = new VirtualRenderer(_this.$compile, _this.$injector, _this.$timeout, _this.getX, _this.translateX);
                 instance.template = options.template;
                 instance.items = options.items;
                 instance.itemName = options.itemName;
@@ -498,6 +434,71 @@ var ElectionCarousel;
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
+    var getHtml = function (who, deep) {
+        if (!who || !who.tagName)
+            return '';
+        var txt, ax, el = document.createElement("div");
+        el.appendChild(who.cloneNode(false));
+        txt = el.innerHTML;
+        if (deep) {
+            ax = txt.indexOf('>') + 1;
+            txt = txt.substring(0, ax) + who.innerHTML + txt.substring(ax);
+        }
+        el = null;
+        return txt;
+    };
+    angular.module("carousel").value("getHtml", getHtml);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=getHtml.js.map
+
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    ElectionCarousel.getX = function (element) {
+        var transform = angular.element(element).css("transform");
+        if (transform === "none")
+            return 0;
+        var result = JSON.parse(transform.replace(/^\w+\(/, "[").replace(/\)$/, "]"));
+        return JSON.parse(transform.replace(/^\w+\(/, "[").replace(/\)$/, "]"))[4];
+    };
+    angular.module("carousel").value("getX", ElectionCarousel.getX);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=getX.js.map
+
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    ElectionCarousel.isMobile = function () {
+        return window.innerWidth < 768;
+    };
+    angular.module("carousel").value("isMobile", ElectionCarousel.isMobile);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=isMobile.js.map
+
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    ElectionCarousel.translateX = function (element, value) {
+        angular.element(element).css({
+            "-moz-transform": "translateX(" + value + "px)",
+            "-webkit-transform": "translateX(" + value + "px)",
+            "-ms-transform": "translateX(" + value + "px)",
+            "-transform": "translateX(" + value + "px)"
+        });
+        return element;
+    };
+    angular.module("carousel").value("translateX", ElectionCarousel.translateX);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=translateX.js.map
+
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
     var RidingsController = (function () {
         function RidingsController(ridings) {
             this.ridings = ridings;
@@ -505,7 +506,7 @@ var ElectionCarousel;
         return RidingsController;
     })();
     ElectionCarousel.RidingsController = RidingsController;
-    angular.module("election-carousel").controller("ridingsController", ["ridings", RidingsController]);
+    angular.module("election").controller("ridingsController", ["ridings", RidingsController]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=ridingsController.js.map
@@ -521,7 +522,7 @@ var ElectionCarousel;
         };
     }
     ElectionCarousel.Percentage = Percentage;
-    angular.module("election-carousel").filter("percentage", ["$filter", Percentage]);
+    angular.module("election").filter("percentage", ["$filter", Percentage]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=percentage.js.map
@@ -595,7 +596,7 @@ var ElectionCarousel;
         return Candidate;
     })();
     ElectionCarousel.Candidate = Candidate;
-    angular.module("election-carousel").service("candidate", ["$injector", "percentageFilter", Candidate]);
+    angular.module("election").service("candidate", ["$injector", "percentageFilter", Candidate]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=candidate.js.map
@@ -603,7 +604,7 @@ var ElectionCarousel;
 /// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
-    angular.module("election-carousel").value("localStorage", localStorage);
+    angular.module("election").value("localStorage", localStorage);
     var LocalStorageManager = (function () {
         function LocalStorageManager($window, localStorage) {
             var _this = this;
@@ -670,7 +671,7 @@ var ElectionCarousel;
         return LocalStorageManager;
     })();
     ElectionCarousel.LocalStorageManager = LocalStorageManager;
-    angular.module("election-carousel").service("localStorageManager", ["$window", "localStorage", LocalStorageManager]);
+    angular.module("election").service("localStorageManager", ["$window", "localStorage", LocalStorageManager]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=localStorageManager.js.map
@@ -723,7 +724,7 @@ var ElectionCarousel;
         return Party;
     })();
     ElectionCarousel.Party = Party;
-    angular.module("election-carousel").service("party", [Party]);
+    angular.module("election").service("party", [Party]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=party.js.map
@@ -790,7 +791,7 @@ var ElectionCarousel;
         return Riding;
     })();
     ElectionCarousel.Riding = Riding;
-    angular.module("election-carousel").service("riding", ["candidate", Riding]);
+    angular.module("election").service("riding", ["candidate", Riding]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=riding.js.map
@@ -830,7 +831,7 @@ var ElectionCarousel;
         return RidingsDataService;
     })();
     ElectionCarousel.RidingsDataService = RidingsDataService;
-    angular.module("election-carousel").service("ridingDataService", ["$http", "$q", "localStorageManager", RidingsDataService]);
+    angular.module("election").service("ridingDataService", ["$http", "$q", "localStorageManager", RidingsDataService]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=ridingsDataService.js.map
@@ -910,6 +911,45 @@ var ElectionCarousel;
 
 //# sourceMappingURL=carousel.js.map
 
+/// <reference path="../../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    var AutoSizeText = (function () {
+        function AutoSizeText() {
+            this.restrict = "A";
+            this.link = function (scope, element, attributes) {
+                var $parent = angular.element(element[0].parentNode);
+                var lastParentHeight;
+                var maxFontSize = 32;
+                scope.$$postDigest(function () {
+                    var fontSize = maxFontSize;
+                    do {
+                        element.css('font-size', fontSize);
+                        fontSize = fontSize - 1;
+                    } while ((element.height() + $parent.find("h3").height()) > $parent.height());
+                });
+                window.addEventListener("resize", function () {
+                    lastParentHeight = $parent.height();
+                    var fontSize = maxFontSize;
+                    do {
+                        element.css('font-size', fontSize);
+                        fontSize = fontSize - 1;
+                    } while ((element.height() + $parent.find("h3").height()) > lastParentHeight);
+                });
+            };
+        }
+        AutoSizeText.createInstance = function () {
+            return new AutoSizeText();
+        };
+        return AutoSizeText;
+    })();
+    ElectionCarousel.AutoSizeText = AutoSizeText;
+    angular.module("election").directive("autoSizeText", [AutoSizeText.createInstance]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=autoSizeText.js.map
+
+/// <reference path="../../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
     var Directives;
@@ -931,7 +971,7 @@ var ElectionCarousel;
             return CandidateList;
         })();
         Directives.CandidateList = CandidateList;
-        angular.module("election-carousel").directive("candidateList", [CandidateList.createInstance]);
+        angular.module("election").directive("candidateList", [CandidateList.createInstance]);
     })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
 })(ElectionCarousel || (ElectionCarousel = {}));
 

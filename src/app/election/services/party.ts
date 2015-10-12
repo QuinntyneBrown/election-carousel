@@ -48,5 +48,5 @@
         public set partyCode(value: string) { this._partyCode = value; }
     }
 
-    angular.module("election-carousel").service("party", [Party]);
+    angular.module("election").service("party", [Party]);
 } 

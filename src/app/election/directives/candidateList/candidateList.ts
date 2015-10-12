@@ -1,5 +1,6 @@
-﻿module ElectionCarousel.Directives {
+﻿/// <reference path="../../../../../typings/typescriptapp.d.ts" />
 
+module ElectionCarousel.Directives {
 
     export class CandidateList {
         constructor() { }
@@ -24,5 +25,5 @@
         }
     }
 
-    angular.module("election-carousel").directive("candidateList", [CandidateList.createInstance]);
+    angular.module("election").directive("candidateList", [CandidateList.createInstance]);
 } 

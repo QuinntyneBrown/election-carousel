@@ -2,7 +2,7 @@
 
 angular.module("templates", []);
 
-angular.module("election-carousel", ["ui.router", "carousel","templates"])
+angular.module("election", ["ui.router", "carousel","templates"])
     .config([
         "$stateProvider", ($stateProvider: ng.ui.IStateProvider) => {
 

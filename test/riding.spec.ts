@@ -7,7 +7,7 @@ module ElectionCarousel {
         var riding:IRiding;
 
         beforeEach(() => {
-            angular.mock.module("election-carousel");
+            angular.mock.module("election");
         });
 
         beforeEach(inject((_riding_:IRiding) => {

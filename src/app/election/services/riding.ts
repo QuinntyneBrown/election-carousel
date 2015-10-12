@@ -62,5 +62,5 @@
 
     }
 
-    angular.module("election-carousel").service("riding", ["candidate",Riding]);
+    angular.module("election").service("riding", ["candidate",Riding]);
 } 

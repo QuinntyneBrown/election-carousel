@@ -8,12 +8,13 @@ module ElectionCarousel {
         
         constructor(private $compile: ng.ICompileService,
             private $injector: ng.auto.IInjectorService,
+            private $interval:ng.IIntervalService,
             private $timeout: ng.ITimeoutService,
             private getX: IGetX,
             private translateX:ITranslateX) { }
 
         public createInstance = (options: IRendererInstanceOptions) => {
-            var instance = new Renderer(this.$compile, this.$injector, this.$timeout, this.getX, this.translateX);
+            var instance = new Renderer(this.$compile, this.$injector, this.$interval, this.$timeout, this.getX, this.translateX);
 
             instance.template = options.template;
             instance.items = options.items;
@@ -30,7 +31,7 @@ module ElectionCarousel {
 
             instance.lastViewPortWidth = instance.viewPort.width;
 
-            setInterval(() => {
+            instance.$interval(() => {
 
                 if (instance.lastViewPortWidth != instance.viewPort.width) {
                     instance.lastViewPortWidth = instance.viewPort.width;
@@ -38,7 +39,7 @@ module ElectionCarousel {
                     instance.reRender();
 
                 }
-            }, 10);
+            }, 10, null, false);
 
             instance.container = (<IContainer>this.$injector.get("container")).createInstance({
                 height: Number(options.attributes["carouselHeight"]),
@@ -46,7 +47,7 @@ module ElectionCarousel {
                 parentElement: instance.viewPort.augmentedJQuery
             });
 
-            instance.container.htmlElement.addEventListener('transitionend', () => {
+            instance.container.htmlElement.addEventListener("transitionend", () => {
                 instance.inTransition = false;
             });
 
@@ -152,5 +153,5 @@ module ElectionCarousel {
         
     }
 
-    angular.module("carousel").service("renderer", ["$compile", "$injector", "$timeout","getX","translateX",Renderer]);
+    angular.module("carousel").service("renderer", ["$compile", "$injector", "$interval", "$timeout","getX","translateX",Renderer]);
 } 

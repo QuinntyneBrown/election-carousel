@@ -39,5 +39,5 @@ module ElectionCarousel {
         private localStorageManager: ILocalStorageManager;
     }
 
-    angular.module("election-carousel").service("ridingDataService", ["$http", "$q", "localStorageManager",RidingsDataService]);
+    angular.module("election").service("ridingDataService", ["$http", "$q", "localStorageManager",RidingsDataService]);
 } 

@@ -11,5 +11,5 @@ module ElectionCarousel {
         };
     }
 
-    angular.module("election-carousel").filter("percentage", ["$filter",Percentage]);
+    angular.module("election").filter("percentage", ["$filter",Percentage]);
 }

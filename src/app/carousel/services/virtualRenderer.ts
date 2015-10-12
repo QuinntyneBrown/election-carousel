@@ -13,7 +13,7 @@ module ElectionCarousel {
             private translateX: ITranslateX) { }
 
         public createInstance = (options: IRendererInstanceOptions) => {
-            var instance = new Renderer(this.$compile, this.$injector, this.$timeout, this.getX, this.translateX);
+            var instance = new VirtualRenderer(this.$compile, this.$injector, this.$timeout, this.getX, this.translateX);
 
             instance.template = options.template;
             instance.items = options.items;

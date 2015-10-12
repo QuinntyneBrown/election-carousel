@@ -108,8 +108,9 @@
     <TypeScriptCompile Include="src\app\carousel\services\viewPort.ts" />
     <TypeScriptCompile Include="src\app\carousel\services\virtualRenderer.ts" />
     <TypeScriptCompile Include="src\app\election\controllers\ridingsController.ts" />
+    <TypeScriptCompile Include="src\app\election\directives\autoSizeText\autoSizeText.ts" />
     <TypeScriptCompile Include="src\app\election\directives\candidateList\candidateList.ts" />
-    <TypeScriptCompile Include="src\app\election\electionCarousel.module.ts" />
+    <TypeScriptCompile Include="src\app\election\election.module.ts" />
     <TypeScriptCompile Include="src\app\election\filters\percentage.ts" />
     <TypeScriptCompile Include="src\app\carousel\functions\getHtml.ts" />
     <TypeScriptCompile Include="src\app\carousel\functions\getX.ts" />
@@ -120,7 +121,7 @@
     <TypeScriptCompile Include="src\app\election\services\party.ts" />
     <TypeScriptCompile Include="src\app\election\services\riding.ts" />
     <TypeScriptCompile Include="src\app\election\services\ridingsDataService.ts" />
-    <TypeScriptCompile Include="src\app\election\electionCarousel.states.ts" />
+    <TypeScriptCompile Include="src\app\election\election.states.ts" />
     <TypeScriptCompile Include="test\riding.spec.ts" />
   </ItemGroup>
   <ItemGroup />

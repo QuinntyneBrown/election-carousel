@@ -1,11 +1,13 @@
-﻿
-body {
+﻿body {
     font-family: "Gotham SSm A","Gotham SSm B",Arial,Helvetica,sans-serif;
     font-size: 16px;
     color: whitesmoke;
     background-color: #F1F1F1;
 }
 
+h3 {
+    line-height: 1.25;
+}
 .right {
     position: relative;
     float: right;
@@ -26,7 +28,6 @@ body {
 }
 
 .riding-slide {
-    max-width: 650px;
     width: 100%;
     min-height: 300px;
     position: relative;
@@ -53,15 +54,14 @@ body {
 
 
 .riding-name {
-    font-size: 250%;
+    font-size: 200%;
     font-weight: 600;
 }
 
 /* carousel */
 
 .container {
-    width: 50000px;
-    height: 200px;
+    width: 99999999px;
     -moz-transition: all .500s cubic-bezier(.10, .10, .25, .90);
     -ms-transition: all .500s cubic-bezier(.10, .10, .25, .90);
     -webkit-transition: all .500s cubic-bezier(.10, .10, .25, .90);
@@ -69,7 +69,6 @@ body {
 }
 
 .view-port {
-    max-width: 650px;
     width: 100%;
     min-height: 300px;
     overflow-x: hidden;

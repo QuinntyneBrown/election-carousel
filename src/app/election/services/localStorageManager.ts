@@ -3,7 +3,7 @@
 
 module ElectionCarousel {
 
-    angular.module("election-carousel").value("localStorage", localStorage);
+    angular.module("election").value("localStorage", localStorage);
 
 
     export class LocalStorageManager implements ILocalStorageManager {
@@ -76,5 +76,5 @@ module ElectionCarousel {
         }
     }
 
-    angular.module("election-carousel").service("localStorageManager", ["$window", "localStorage", LocalStorageManager]);
+    angular.module("election").service("localStorageManager", ["$window", "localStorage", LocalStorageManager]);
 } 

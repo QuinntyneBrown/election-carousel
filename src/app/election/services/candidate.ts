@@ -57,5 +57,5 @@
 
     }
 
-    angular.module("election-carousel").service("candidate", ["$injector","percentageFilter",Candidate]);
+    angular.module("election").service("candidate", ["$injector","percentageFilter",Candidate]);
 } 
