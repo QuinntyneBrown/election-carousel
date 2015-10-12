@@ -3,10 +3,10 @@
     "use strict";
 
     export class Candidate implements ICandidate {
-        constructor(private $filter:ng.IFilterService,private $injector: ng.auto.IInjectorService) { }
+        constructor(private $injector: ng.auto.IInjectorService, private percentageFilter:Function) { }
 
         public createInstance = (options: ICandidateInstanceOptions) => {
-            var instance = new Candidate(this.$filter, this.$injector);
+            var instance = new Candidate(this.$injector, this.percentageFilter);
             instance.party = (<IParty>this.$injector.get("party")).createInstance({ partyCode: options.data.partyCode });
             instance.name = options.data.name;
             instance.votes = options.data.votes;
@@ -44,12 +44,9 @@
 
         public set votes(value: number) { this._votes = value; }
 
-        public get percentageOfTotalVotes() {
-            var value: any = (this._votes / this.totalVotes);
-            var percentage: any = this.$filter('number')(value * 100, 1);
-            return (percentage) + "%";
+        public get percentageOfTotalVotes() {            
+            return this.percentageFilter(this._votes / this.totalVotes);
         }
-
 
         private _party: IParty;
 
@@ -60,5 +57,5 @@
 
     }
 
-    angular.module("election-carousel").service("candidate", ["$filter","$injector",Candidate]);
+    angular.module("election-carousel").service("candidate", ["$injector","percentageFilter",Candidate]);
 } 

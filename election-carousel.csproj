@@ -62,6 +62,8 @@
     <Content Include="dist\electionCarousel.min.js.map">
       <DependentUpon>electionCarousel.min.js</DependentUpon>
     </Content>
+    <Content Include="node_modules\jquery\dist\jquery.min.map" />
+    <Content Include="node_modules\angular\angular.min.js.map" />
     <None Include="Properties\PublishProfiles\electioncarousel - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\electioncarousel - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
@@ -79,9 +81,12 @@
     <Content Include="index.html" />
     <Content Include="karma.conf.js" />
     <Content Include="node_modules\angular-ui-router\release\angular-ui-router.js" />
+    <Content Include="node_modules\angular-ui-router\release\angular-ui-router.min.js" />
     <Content Include="node_modules\angular\angular.js" />
+    <Content Include="node_modules\angular\angular.min.js" />
     <Content Include="node_modules\fastclick\lib\fastclick.js" />
     <Content Include="node_modules\jquery\dist\jquery.js" />
+    <Content Include="node_modules\jquery\dist\jquery.min.js" />
     <Content Include="results-2011.js" />
     <Content Include="src\app\directives\appFooter\appFooter.html" />
     <Content Include="src\app\directives\appHeader\appHeader.html" />
@@ -102,12 +107,14 @@
     <TypeScriptCompile Include="src\app\directives\candidateList\candidateList.ts" />
     <TypeScriptCompile Include="src\app\directives\carousel\carousel.ts" />
     <TypeScriptCompile Include="src\app\electionCarousel.module.ts" />
+    <TypeScriptCompile Include="src\app\filters\percentage.ts" />
     <TypeScriptCompile Include="src\app\function\getHtml.ts" />
     <TypeScriptCompile Include="src\app\function\getX.ts" />
     <TypeScriptCompile Include="src\app\function\isMobile.ts" />
     <TypeScriptCompile Include="src\app\function\translateX.ts" />
     <TypeScriptCompile Include="src\app\services\candidate.ts" />
     <TypeScriptCompile Include="src\app\services\container.ts" />
+    <TypeScriptCompile Include="src\app\services\localStorageManager.ts" />
     <TypeScriptCompile Include="src\app\services\navigation.ts" />
     <TypeScriptCompile Include="src\app\services\party.ts" />
     <TypeScriptCompile Include="src\app\services\renderedNodes.ts" />
@@ -116,11 +123,8 @@
     <TypeScriptCompile Include="src\app\services\ridingsDataService.ts" />
     <TypeScriptCompile Include="src\app\electionCarousel.states.ts" />
     <TypeScriptCompile Include="src\app\services\viewPort.ts" />
+    <TypeScriptCompile Include="src\app\services\virtualRenderer.ts" />
     <TypeScriptCompile Include="test\riding.spec.ts" />
-    <TypeScriptCompile Include="typings\angularjs\angular.d.ts" />
-    <TypeScriptCompile Include="typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="typings\tsd.d.ts" />
-    <TypeScriptCompile Include="typings\typeScriptApp.d.ts" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

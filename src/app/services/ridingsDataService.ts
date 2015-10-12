@@ -6,23 +6,38 @@ module ElectionCarousel {
 
     export class RidingsDataService implements IRidingsDataService {
 
-        constructor(private $http:ng.IHttpService, private $q: ng.IQService) { }
+        constructor(private $http: ng.IHttpService, private $q: ng.IQService, localStorageManager: ILocalStorageManager) {
+            this.localStorageManager = localStorageManager.createInstance({ storageId: "election-carousel" });
+            
+        }
 
         public getAll = () => {
+            var url = "http://static.globalnews.ca/content/test/results-2011.js";
+
             var deferred = this.$q.defer();
-            jQuery.ajax({
-                type: 'GET',
-                url: "http://static.globalnews.ca/content/test/results-2011.js",
-                jsonpCallback: 'gNews_getRidingDetailsCallback',
-                dataType: 'jsonp',
-                success: (results) => {
-                    deferred.resolve(results);
-                }
-            });
+
+            var cachedData: any = this.localStorageManager.getByName({ name: url });
+
+            if (!cachedData) {
+                jQuery.ajax({
+                    type: 'GET',
+                    url: url,
+                    jsonpCallback: 'gNews_getRidingDetailsCallback',
+                    dataType: 'jsonp',
+                    success: (results) => {
+                        this.localStorageManager.put({ name: url, value: results });
+                        deferred.resolve(results);
+                    }
+                });
+            } else {
+                deferred.resolve(cachedData.value);
+            }
 
             return deferred.promise;
         }
+
+        private localStorageManager: ILocalStorageManager;
     }
 
-    angular.module("election-carousel").service("ridingDataService", ["$http", "$q", RidingsDataService]);
+    angular.module("election-carousel").service("ridingDataService", ["$http", "$q", "localStorageManager",RidingsDataService]);
 } 

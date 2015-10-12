@@ -2,6 +2,13 @@
 
 declare module ElectionCarousel {
     
+    export interface ILocalStorageManager {
+        createInstance(options?:any);
+        get(): Array<any>;
+        getByName(options: any): any;
+        put(options:any):void;
+    }
+
     export interface IIsMobileFn {
         ():boolean;
     }
@@ -61,8 +68,8 @@ declare module ElectionCarousel {
     }
 
     export interface IContainerInstanceOptions {
-        width: number;
-        height: number;
+        width?: number;
+        height?: number;
         parentElement: ng.IAugmentedJQuery;        
     }
 

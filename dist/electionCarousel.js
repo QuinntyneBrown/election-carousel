@@ -155,12 +155,12 @@ var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
     var Candidate = (function () {
-        function Candidate($filter, $injector) {
+        function Candidate($injector, percentageFilter) {
             var _this = this;
-            this.$filter = $filter;
             this.$injector = $injector;
+            this.percentageFilter = percentageFilter;
             this.createInstance = function (options) {
-                var instance = new Candidate(_this.$filter, _this.$injector);
+                var instance = new Candidate(_this.$injector, _this.percentageFilter);
                 instance.party = _this.$injector.get("party").createInstance({ partyCode: options.data.partyCode });
                 instance.name = options.data.name;
                 instance.votes = options.data.votes;
@@ -206,9 +206,7 @@ var ElectionCarousel;
         });
         Object.defineProperty(Candidate.prototype, "percentageOfTotalVotes", {
             get: function () {
-                var value = (this._votes / this.totalVotes);
-                var percentage = this.$filter('number')(value * 100, 1);
-                return (percentage) + "%";
+                return this.percentageFilter(this._votes / this.totalVotes);
             },
             enumerable: true,
             configurable: true
@@ -222,7 +220,7 @@ var ElectionCarousel;
         return Candidate;
     })();
     ElectionCarousel.Candidate = Candidate;
-    angular.module("election-carousel").service("candidate", ["$filter", "$injector", Candidate]);
+    angular.module("election-carousel").service("candidate", ["$injector", "percentageFilter", Candidate]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=candidate.js.map
@@ -264,6 +262,81 @@ var ElectionCarousel;
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=container.js.map
+
+/// <reference path="../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    angular.module("election-carousel").value("localStorage", localStorage);
+    var LocalStorageManager = (function () {
+        function LocalStorageManager($window, localStorage) {
+            var _this = this;
+            this.$window = $window;
+            this.localStorage = localStorage;
+            this.createInstance = function (options) {
+                var instance = new LocalStorageManager(_this.$window, _this.localStorage);
+                if (options && options.storageId) {
+                    instance.storageId = options.storageId;
+                }
+                else {
+                    instance.storageId = "localStorage";
+                }
+                return instance;
+            };
+            this._items = null;
+            this.get = function () {
+                if (_this._items) {
+                    return _this._items;
+                }
+                var storageEntry = _this.localStorage.getItem(_this._storageId);
+                if (storageEntry === "undefined" || storageEntry === null || storageEntry === "null") {
+                    _this._items = [];
+                }
+                else {
+                    _this._items = JSON.parse(storageEntry);
+                }
+                return _this._items;
+            };
+            this.getByName = function (options) {
+                var items = _this.get();
+                var storageItem = null;
+                items.forEach(function (item) {
+                    if (options.name === item.name) {
+                        storageItem = item;
+                    }
+                });
+                return storageItem;
+            };
+            this.put = function (options) {
+                var items = _this.get();
+                var itemExist = false;
+                items.forEach(function (item) {
+                    if (options.name === item.name) {
+                        itemExist = true;
+                        item.value = options.value;
+                        item.category = options.category;
+                    }
+                });
+                if (!itemExist) {
+                    items.push(options);
+                }
+            };
+            $window.onbeforeunload = function () {
+                _this.localStorage.setItem(_this._storageId, JSON.stringify(_this._items));
+            };
+        }
+        Object.defineProperty(LocalStorageManager.prototype, "storageId", {
+            get: function () { return this._storageId; },
+            set: function (value) { this._storageId = value; },
+            enumerable: true,
+            configurable: true
+        });
+        return LocalStorageManager;
+    })();
+    ElectionCarousel.LocalStorageManager = LocalStorageManager;
+    angular.module("election-carousel").service("localStorageManager", ["$window", "localStorage", LocalStorageManager]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=localStorageManager.js.map
 
 /// <reference path="../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
@@ -555,28 +628,37 @@ var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
     var RidingsDataService = (function () {
-        function RidingsDataService($http, $q) {
+        function RidingsDataService($http, $q, localStorageManager) {
             var _this = this;
             this.$http = $http;
             this.$q = $q;
             this.getAll = function () {
+                var url = "http://static.globalnews.ca/content/test/results-2011.js";
                 var deferred = _this.$q.defer();
-                jQuery.ajax({
-                    type: 'GET',
-                    url: "http://static.globalnews.ca/content/test/results-2011.js",
-                    jsonpCallback: 'gNews_getRidingDetailsCallback',
-                    dataType: 'jsonp',
-                    success: function (results) {
-                        deferred.resolve(results);
-                    }
-                });
+                var cachedData = _this.localStorageManager.getByName({ name: url });
+                if (!cachedData) {
+                    jQuery.ajax({
+                        type: 'GET',
+                        url: url,
+                        jsonpCallback: 'gNews_getRidingDetailsCallback',
+                        dataType: 'jsonp',
+                        success: function (results) {
+                            _this.localStorageManager.put({ name: url, value: results });
+                            deferred.resolve(results);
+                        }
+                    });
+                }
+                else {
+                    deferred.resolve(cachedData.value);
+                }
                 return deferred.promise;
             };
+            this.localStorageManager = localStorageManager.createInstance({ storageId: "election-carousel" });
         }
         return RidingsDataService;
     })();
     ElectionCarousel.RidingsDataService = RidingsDataService;
-    angular.module("election-carousel").service("ridingDataService", ["$http", "$q", RidingsDataService]);
+    angular.module("election-carousel").service("ridingDataService", ["$http", "$q", "localStorageManager", RidingsDataService]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=ridingsDataService.js.map
@@ -617,28 +699,134 @@ var ElectionCarousel;
 
 //# sourceMappingURL=viewPort.js.map
 
+/// <reference path="../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
-    var Directives;
-    (function (Directives) {
-        var AppFooter = (function () {
-            function AppFooter() {
-                this.restrict = "E";
-                this.replace = true;
-                this.templateUrl = "src/app/directives/appFooter/appFooter.html";
-                this.link = function (scope, element, attributes) {
-                };
-            }
-            AppFooter.createInstance = function () {
-                return new AppFooter();
+    "use strict";
+    var VirtualRenderer = (function () {
+        function VirtualRenderer($compile, $injector, $timeout, getX, translateX) {
+            var _this = this;
+            this.$compile = $compile;
+            this.$injector = $injector;
+            this.$timeout = $timeout;
+            this.getX = getX;
+            this.translateX = translateX;
+            this.createInstance = function (options) {
+                var instance = new ElectionCarousel.Renderer(_this.$compile, _this.$injector, _this.$timeout, _this.getX, _this.translateX);
+                instance.template = options.template;
+                instance.items = options.items;
+                instance.itemName = options.itemName;
+                instance.scope = options.scope;
+                instance.parentElement = options.parentElement;
+                instance.guid = options.attributes["carouselGuid"];
+                instance.viewPort = _this.$injector.get("viewPort").createInstance({
+                    height: Number(options.attributes["carouselHeight"]),
+                    width: Number(options.attributes["carouselWidth"]),
+                    parentElement: options.parentElement
+                });
+                instance.lastViewPortWidth = instance.viewPort.width;
+                setInterval(function () {
+                    if (instance.lastViewPortWidth != instance.viewPort.width) {
+                        instance.lastViewPortWidth = instance.viewPort.width;
+                        instance.reRender();
+                    }
+                }, 10);
+                instance.container = _this.$injector.get("container").createInstance({
+                    parentElement: instance.viewPort.augmentedJQuery
+                });
+                instance.container.htmlElement.addEventListener('transitionend', function () {
+                    instance.inTransition = false;
+                });
+                instance.navigation = _this.$injector.get("navigation").createInstance({
+                    guid: instance.guid,
+                    parentElement: instance.viewPort.augmentedJQuery,
+                    scope: instance.scope
+                });
+                instance.scope = options.scope;
+                instance.scope.onPrevious = instance.renderPrevious;
+                instance.scope.onNext = instance.renderNext;
+                return instance;
             };
-            return AppFooter;
-        })();
-        Directives.AppFooter = AppFooter;
-    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
+            this.render = function (options) {
+                if (!_this.hasRendered)
+                    _this.initialRender();
+            };
+            this.reRender = function () {
+                _this.translateX(_this.container.htmlElement, 0);
+                if (!_this.scope.$$phase)
+                    _this.scope.$digest();
+            };
+            this.renderNext = function () {
+                if (!_this.inTransition) {
+                    _this.inTransition = true;
+                    var x = _this.getX(_this.container.htmlElement);
+                    if (x === (_this.items.length * (-_this.lastViewPortWidth)) + _this.lastViewPortWidth) {
+                        _this.translateX(_this.container.htmlElement, 0);
+                    }
+                    else {
+                        _this.translateX(_this.container.htmlElement, x - _this.lastViewPortWidth);
+                    }
+                }
+            };
+            this.renderPrevious = function () {
+                if (!_this.inTransition) {
+                    _this.inTransition = true;
+                    var x = _this.getX(_this.container.htmlElement);
+                    if (x === 0) {
+                        _this.translateX(_this.container.augmentedJQuery[0], x + (_this.items.length * (-_this.lastViewPortWidth)) + _this.lastViewPortWidth);
+                    }
+                    else {
+                        _this.translateX(_this.container.augmentedJQuery[0], x + _this.lastViewPortWidth);
+                    }
+                }
+            };
+            this.initialRender = function () {
+                var fragment = document.createDocumentFragment();
+                for (var i = 0; i < _this.items.length; i++) {
+                    var childScope = _this.scope.$new(true);
+                    childScope[_this.itemName] = _this.items[i];
+                    childScope.$$index = i;
+                    childScope.viewPort = _this.viewPort;
+                    childScope.container = _this.container;
+                    var itemContent = _this.$compile(angular.element(_this.template))(childScope);
+                    fragment.appendChild(itemContent[0]);
+                }
+                _this.container.augmentedJQuery[0].appendChild(fragment);
+                _this.hasRendered = true;
+            };
+            this.hasRendered = false;
+            this.inTransition = false;
+            this.lastViewPortWidth = 0;
+        }
+        Object.defineProperty(VirtualRenderer.prototype, "guid", {
+            get: function () { return this._guid; },
+            set: function (value) { this._guid = value; },
+            enumerable: true,
+            configurable: true
+        });
+        return VirtualRenderer;
+    })();
+    ElectionCarousel.VirtualRenderer = VirtualRenderer;
+    angular.module("election-carousel").service("virtualRenderer", ["$compile", "$injector", "$timeout", "getX", "translateX", VirtualRenderer]);
 })(ElectionCarousel || (ElectionCarousel = {}));
 
-//# sourceMappingURL=appFooter.js.map
+//# sourceMappingURL=virtualRenderer.js.map
+
+/// <reference path="../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    function Percentage($filter) {
+        var _$filter = $filter;
+        return function (value) {
+            return (_$filter('number')(value * 100, 1)) + "%";
+        };
+    }
+    ElectionCarousel.Percentage = Percentage;
+    angular.module("election-carousel").filter("percentage", ["$filter", Percentage]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=percentage.js.map
 
 var ElectionCarousel;
 (function (ElectionCarousel) {
@@ -764,3 +952,26 @@ var ElectionCarousel;
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=carousel.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    var Directives;
+    (function (Directives) {
+        var AppFooter = (function () {
+            function AppFooter() {
+                this.restrict = "E";
+                this.replace = true;
+                this.templateUrl = "src/app/directives/appFooter/appFooter.html";
+                this.link = function (scope, element, attributes) {
+                };
+            }
+            AppFooter.createInstance = function () {
+                return new AppFooter();
+            };
+            return AppFooter;
+        })();
+        Directives.AppFooter = AppFooter;
+    })(Directives = ElectionCarousel.Directives || (ElectionCarousel.Directives = {}));
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=appFooter.js.map
