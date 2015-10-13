@@ -129,16 +129,23 @@ h3 {
         top: 0;
         z-index: 25;
         width: 100px;
-        height: 100%;
-        /*background-color: black;*/            
+        height: 100%;            
     }
 
-    .view-port .next-arrow {
+    .view-port .previous-arrow img, 
+    .view-port .next-arrow img {
+        position: absolute;
+        top: calc(50% - 40px);
+        cursor: pointer;
+        left: 25px;
+    }
+
+    .view-port .next-arrow {        
         left: calc(100% - 100px);
     }
 
-    /*.view-port .navigation {
+    .view-port .navigation {
         display: none;
-    }*/
+    }
     
 }

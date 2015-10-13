@@ -5,17 +5,20 @@ module ElectionCarousel {
     "use strict";
 
     export class ViewPort {
-        constructor() { }
+        constructor(private $compile:ng.ICompileService) { }
 
         public createInstance = (options: IViewPortInstanceOptions) => {
-            var instance = new ViewPort();
+            var instance = new ViewPort(this.$compile);
             var viewPort = angular.element("<div class='view-port'></div>");
-            var previousArrow = angular.element("<div class='previous-arrow'></div>");
-            var nextArrow = angular.element("<div class='next-arrow'></div>");
+            var previousArrow = angular.element("<div class='previous-arrow' data-ng-click='onPrevious()'><img src='assets/images/carousel_button_prev.png'/></div>");
+            var nextArrow = angular.element("<div class='next-arrow' data-ng-click='onNext()'><img src='assets/images/carousel_button_next.png'/></div>");
             viewPort.append(previousArrow);
             viewPort.append(nextArrow);
             viewPort.css("overflowX", "hidden");
-            options.parentElement.append(viewPort);
+
+            var viewPortContent = this.$compile(viewPort)(options.scope);
+
+            options.parentElement.append(viewPortContent);
             instance.augmentedJQuery = options.parentElement.find(".view-port");
             return instance;
         }
@@ -30,5 +33,5 @@ module ElectionCarousel {
 
     }
 
-    angular.module("carousel").service("viewPort", [ViewPort]);
+    angular.module("carousel").service("viewPort", ["$compile",ViewPort]);
 } 

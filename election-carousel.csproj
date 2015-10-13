@@ -59,6 +59,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\images\carousel_button_next.png" />
+    <Content Include="assets\images\carousel_button_prev.png" />
     <Content Include="dist\electionCarousel.min.js.map">
       <DependentUpon>electionCarousel.min.js</DependentUpon>
     </Content>

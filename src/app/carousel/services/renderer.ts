@@ -24,7 +24,8 @@ module ElectionCarousel {
             instance.guid = options.attributes["carouselGuid"];
 
             instance.viewPort = (<IViewPort>this.$injector.get("viewPort")).createInstance({
-                parentElement: options.parentElement
+                parentElement: options.parentElement,
+                scope: options.scope
             });
 
             instance.lastViewPortWidth = instance.viewPort.width;
