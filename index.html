@@ -18,9 +18,16 @@
 </head>
 <body data-ng-app="election">
 
-    <div id="main-content" ui-view="">
+    <div id="app-container">
+        
+        <app-header></app-header>
+
+        <div id="main-content" ui-view="">
+
+        </div>
 
     </div>
+
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/angular/angular.min.js"></script>

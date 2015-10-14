@@ -3,7 +3,14 @@
     font-size: 16px;
     color: whitesmoke;
     background-color: #F1F1F1;
+    width: 100%;
 }
+
+#app-container {
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
 
 h3 {
     line-height: 1.25;
@@ -23,13 +30,33 @@ h3 {
 }
 
 .footnote {
-    font-size: 75%;
-    margin-top: 30px;
+    font-size: 60%;
 }
 
+/* layout*/
+
+#app-header {
+    height: 250px;
+    background-color: #034B81;
+}
+
+
+#advertising {
+    height: 110px;
+    background: rgba(0, 0, 0, 0) url("/assets/images/lightbluestripe.png") repeat scroll 0 0;
+}
+
+#app-hero-banner {
+    background-color: #134071;
+    height: 110px;
+    width: 100%;
+}
+
+#navigation {
+    height: 50px;
+}
 .riding-slide {
     width: 100%;
-    min-height: 300px;
     position: relative;
     float: left;
 }
@@ -39,7 +66,7 @@ h3 {
     padding-top: 7.5px;
     padding-left: 20px;
     padding-right: 20px;
-    height: 85px;
+    height: 51px;
 }
 
 .riding-slide .content {
@@ -49,9 +76,11 @@ h3 {
     padding-right: 20px;
     color: #6F6F6F;
     background-color: #FFF;
-    min-height: 150px;
 }
 
+.riding-slide h4 {
+    font-size: 60%;  
+}
 
 .riding-name {
     font-size: 200%;
@@ -59,7 +88,24 @@ h3 {
 }
 
 .candidate h1 {
-    font-size: 90%;
+    font-size: 85%;
+    line-height: 1.5;
+}
+
+.candidate {
+    width: 100%;
+    padding-bottom: 15px;
+}
+
+.candidate .vote-percentage {
+    width: 35px;
+    font-size: 85%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 9px;
+    padding-right: 9px;
+    color: #fff;
+    font-weight: 600;
 }
 /* carousel */
 
@@ -72,8 +118,7 @@ h3 {
 }
 
 .view-port {
-    width: 100%;
-    min-height: 300px;
+    max-width: 750px;
     overflow-x: hidden;
     background-color: #FFF;
     position: relative;
@@ -94,6 +139,7 @@ h3 {
 .view-port .previous-arrow, 
 .view-port .next-arrow {
     display: none;
+    opacity: .35;
 }
 
 .view-port .navigation .previous {
@@ -116,7 +162,7 @@ h3 {
     cursor: pointer;
 }
 
-@media (min-width: 850px) {
+@media (min-width: 710px) {
     .view-port .content,
     .view-port .header {
         padding-right: 100px;
@@ -137,11 +183,11 @@ h3 {
         position: absolute;
         top: calc(50% - 40px);
         cursor: pointer;
-        left: 25px;
+        left: 0;
     }
 
     .view-port .next-arrow {        
-        left: calc(100% - 100px);
+        left: calc(100% - 80px);
     }
 
     .view-port .navigation {

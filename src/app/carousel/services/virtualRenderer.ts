@@ -8,12 +8,13 @@ module ElectionCarousel {
 
         constructor(private $compile: ng.ICompileService,
             private $injector: ng.auto.IInjectorService,
+            private $interval: ng.IIntervalService,
             private $timeout: ng.ITimeoutService,
             private getX: IGetX,
             private translateX: ITranslateX) { }
 
         public createInstance = (options: IRendererInstanceOptions) => {
-            var instance = new VirtualRenderer(this.$compile, this.$injector, this.$timeout, this.getX, this.translateX);
+            var instance = new VirtualRenderer(this.$compile, this.$injector, this.$interval, this.$timeout, this.getX, this.translateX);
 
             instance.template = options.template;
             instance.items = options.items;
@@ -23,29 +24,27 @@ module ElectionCarousel {
             instance.guid = options.attributes["carouselGuid"];
 
             instance.viewPort = (<IViewPort>this.$injector.get("viewPort")).createInstance({
-                height: Number(options.attributes["carouselHeight"]),
-                width: Number(options.attributes["carouselWidth"]),
                 parentElement: options.parentElement,
                 scope: options.scope
             });
 
             instance.lastViewPortWidth = instance.viewPort.width;
 
-            setInterval(() => {
+            instance.$interval(() => {
 
                 if (instance.lastViewPortWidth != instance.viewPort.width) {
                     instance.lastViewPortWidth = instance.viewPort.width;
-
                     instance.reRender();
-
                 }
-            }, 10);
+            }, 10, null, false);
 
             instance.container = (<IContainer>this.$injector.get("container")).createInstance({
+                height: Number(options.attributes["carouselHeight"]),
+                width: Number(options.attributes["carouselWidth"]) * options.items.length,
                 parentElement: instance.viewPort.augmentedJQuery
             });
 
-            instance.container.htmlElement.addEventListener('transitionend', () => {
+            instance.container.htmlElement.addEventListener("transitionend", () => {
                 instance.inTransition = false;
             });
 
@@ -76,28 +75,20 @@ module ElectionCarousel {
 
         public renderNext = () => {
             if (!this.inTransition) {
-
                 this.inTransition = true;
-
                 var x = this.getX(this.container.htmlElement);
-
                 if (x === (this.items.length * (-this.lastViewPortWidth)) + this.lastViewPortWidth) {
                     this.translateX(this.container.htmlElement, 0);
                 } else {
                     this.translateX(this.container.htmlElement, x - this.lastViewPortWidth);
                 }
-
             }
-
         }
 
-        renderPrevious = () => {
+        public renderPrevious = () => {
             if (!this.inTransition) {
-
                 this.inTransition = true;
-
                 var x = this.getX(this.container.htmlElement);
-
                 if (x === 0) {
                     this.translateX(this.container.augmentedJQuery[0], x + (this.items.length * (-this.lastViewPortWidth)) + this.lastViewPortWidth);
                 } else {
@@ -119,7 +110,14 @@ module ElectionCarousel {
             }
             this.container.augmentedJQuery[0].appendChild(fragment);
             this.hasRendered = true;
+            this._currentIndex = 0;
         }
+
+        public _currentIndex:number;
+
+        public get currentIndex() { return this._currentIndex; }
+
+        public set currentIndex(value: number) { this._currentIndex = value; }
 
         public items: Array<any>;
 
@@ -151,5 +149,5 @@ module ElectionCarousel {
 
     }
 
-    angular.module("carousel").service("virtualRenderer", ["$compile", "$injector", "$timeout", "getX", "translateX", VirtualRenderer]);
+    angular.module("carousel").service("virtualRenderer", ["$compile", "$injector", "$interval", "$timeout", "getX", "translateX", VirtualRenderer]);
 } 

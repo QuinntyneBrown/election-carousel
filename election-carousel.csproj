@@ -61,6 +61,8 @@
   <ItemGroup>
     <Content Include="assets\images\carousel_button_next.png" />
     <Content Include="assets\images\carousel_button_prev.png" />
+    <Content Include="assets\images\globalNews.png" />
+    <Content Include="assets\images\lightbluestripe.png" />
     <Content Include="dist\electionCarousel.min.js.map">
       <DependentUpon>electionCarousel.min.js</DependentUpon>
     </Content>
@@ -90,6 +92,11 @@
     <Content Include="node_modules\jquery\dist\jquery.js" />
     <Content Include="node_modules\jquery\dist\jquery.min.js" />
     <Content Include="results-2011.js" />
+    <Content Include="src\app\election\directives\advertising\advertising.html" />
+    <Content Include="src\app\election\directives\appFooter\appFooter.html" />
+    <Content Include="src\app\election\directives\appHeader\appHeader.html" />
+    <Content Include="src\app\election\directives\appHeroBanner\appHeroBanner.html" />
+    <Content Include="src\app\election\directives\appNavigation\appNavigation.html" />
     <Content Include="src\app\election\directives\candidateList\candidateList.html" />
     <Content Include="src\app\election\electionCarousel.css" />
     <Content Include="src\app\reset.css" />
@@ -110,6 +117,11 @@
     <TypeScriptCompile Include="src\app\carousel\services\viewPort.ts" />
     <TypeScriptCompile Include="src\app\carousel\services\virtualRenderer.ts" />
     <TypeScriptCompile Include="src\app\election\controllers\ridingsController.ts" />
+    <TypeScriptCompile Include="src\app\election\directives\advertising\advertising.ts" />
+    <TypeScriptCompile Include="src\app\election\directives\appFooter\appFooter.ts" />
+    <TypeScriptCompile Include="src\app\election\directives\appHeader\appHeader.ts" />
+    <TypeScriptCompile Include="src\app\election\directives\appHeroBanner\appHeroBanner.ts" />
+    <TypeScriptCompile Include="src\app\election\directives\appNavigation\appNavigation.ts" />
     <TypeScriptCompile Include="src\app\election\directives\autoSizeText\autoSizeText.ts" />
     <TypeScriptCompile Include="src\app\election\directives\candidateList\candidateList.ts" />
     <TypeScriptCompile Include="src\app\election\election.module.ts" />
