@@ -1,6 +1,19 @@
 ﻿/// <reference path="tsd.d.ts" />
 
 declare module ElectionCarousel {
+
+    export interface ISafeDigestFn {
+        (scope: ng.IScope): void;
+    }
+
+    export interface IRenderedNodes {
+        createInstance(options: IRenderedNodesInstanceOptions): IRenderedNodes;
+        getAll(options:any);
+    }
+
+    export interface IRenderedNodesInstanceOptions {
+        container: IContainer;
+    }
     
     export interface ILocalStorageManager {
         createInstance(options?:any);
@@ -53,6 +66,8 @@ declare module ElectionCarousel {
         createInstance(options:IContainerInstanceOptions):IContainer;
         augmentedJQuery: ng.IAugmentedJQuery;
         htmlElement: HTMLElement;
+        turnOffTransitions(): void;
+        turnOnTransitions(): void;
     }
 
     export interface IViewPort {

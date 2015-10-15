@@ -59,6 +59,19 @@ h3 {
     width: 100%;
     position: relative;
     float: left;
+    width: 99999999px;
+    -moz-transition: transform .500s cubic-bezier(.10, .10, .25, .90);
+    -ms-transition: transform .500s cubic-bezier(.10, .10, .25, .90);
+    -webkit-transition: transform .500s cubic-bezier(.10, .10, .25, .90);
+    transition: transform .500s cubic-bezier(.10, .10, .25, .90);
+}
+
+.notransition .riding-slide {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  transition: none !important;
 }
 
 .riding-slide .header {
@@ -115,6 +128,14 @@ h3 {
     -ms-transition: all .500s cubic-bezier(.10, .10, .25, .90);
     -webkit-transition: all .500s cubic-bezier(.10, .10, .25, .90);
     transition: all .500s cubic-bezier(.10, .10, .25, .90); 
+}
+
+.container.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  transition: none !important;
 }
 
 .view-port {

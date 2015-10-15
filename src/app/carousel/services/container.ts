@@ -25,6 +25,14 @@ module ElectionCarousel {
         public get htmlElement() { return this.augmentedJQuery[0]; }
 
         public get height() { return this.augmentedJQuery.height(); }
+
+        public turnOffTransitions() {
+            this.augmentedJQuery.addClass("notransition");
+        }
+
+        public turnOnTransitions() {
+            this.augmentedJQuery.removeClass("notransition");
+        }
     }
 
     angular.module("carousel").service("container", [Container]);

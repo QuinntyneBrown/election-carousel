@@ -77,5 +77,5 @@ module ElectionCarousel {
 
     }
 
-    angular.module("carousel").directive("carousel", ["$interval","getHtml","renderer",Carousel.createInstance]);
+    angular.module("carousel").directive("carousel", ["$interval", "getHtml","virtualRenderer",Carousel.createInstance]);
 } 
