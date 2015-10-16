@@ -207,6 +207,7 @@
     <TypeScriptCompile Include="src\app\carousel\carousel.module.ts" />
     <TypeScriptCompile Include="src\app\carousel\directives\carousel\carousel.ts" />
     <TypeScriptCompile Include="src\app\carousel\functions\safeDigest.ts" />
+    <TypeScriptCompile Include="src\app\carousel\functions\transitionEnd.ts" />
     <TypeScriptCompile Include="src\app\carousel\services\container.ts" />
     <TypeScriptCompile Include="src\app\carousel\services\navigation.ts" />
     <TypeScriptCompile Include="src\app\carousel\services\renderedNodes.ts" />

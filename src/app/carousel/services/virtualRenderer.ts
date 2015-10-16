@@ -18,11 +18,12 @@ module ElectionCarousel {
             private getX: IGetX,
             private renderedNodes: IRenderedNodes,
             private safeDigest: ISafeDigestFn,
+            private transitonEnd:string,
             private translateX: ITranslateX) { }
 
         public createInstance = (options: IRendererInstanceOptions) => {
 
-            var instance = new VirtualRenderer(this.$compile, this.$injector, this.$interval, this.$timeout, this.getX, this.renderedNodes, this.safeDigest, this.translateX);
+            var instance = new VirtualRenderer(this.$compile, this.$injector, this.$interval, this.$timeout, this.getX, this.renderedNodes, this.safeDigest, this.transitonEnd, this.translateX);
 
             instance.template = options.template;
             instance.items = options.items;
@@ -56,7 +57,7 @@ module ElectionCarousel {
                 container: instance.container
             });
 
-            instance.container.htmlElement.addEventListener("transitionend", () => { instance.inTransition = false; });
+            instance.container.htmlElement.addEventListener(this.transitonEnd, () => { instance.inTransition = false; });
 
             instance.navigation = (<INavigation>this.$injector.get("navigation")).createInstance({
                 guid: instance.guid,
@@ -93,7 +94,7 @@ module ElectionCarousel {
                     var node = renderedNodes[i].node;
                     this.translateX(renderedNodes[i].node, this.getX(renderedNodes[i].node) - this.lastViewPortWidth);
 
-                    renderedNodes[i].node.addEventListener("transitionend", () => {
+                    renderedNodes[i].node.addEventListener(this.transitonEnd, () => {
                         numOfTransitions = numOfTransitions - 1;
 
                         if (numOfTransitions === 0) {
@@ -198,5 +199,5 @@ module ElectionCarousel {
 
     }
 
-    angular.module("carousel").service("virtualRenderer", ["$compile", "$injector", "$interval", "$timeout", "getX", "renderedNodes", "safeDigest", "translateX", VirtualRenderer]);
+    angular.module("carousel").service("virtualRenderer", ["$compile", "$injector", "$interval", "$timeout", "getX", "renderedNodes", "safeDigest", "transitonEnd", "translateX", VirtualRenderer]);
 } 
