@@ -2,16 +2,23 @@
 
 module ElectionCarousel {
 
+    "use strict";
+
+    /**
+    * @name RenderedNodes
+    * @module ElectionCarousel
+    * @description
+    */
     export class RenderedNodes implements IRenderedNodes {
         constructor(private getX: IGetX) { }
 
         public createInstance = (options: IRenderedNodesInstanceOptions) => {
-
             var instance = new RenderedNodes(this.getX);
             instance.container = options.container;
             return instance;
         }
 
+        /** @internal */
         private get nodes() {
             return this.container.htmlElement.childNodes;
         }
@@ -76,6 +83,7 @@ module ElectionCarousel {
             };
         }
 
+        /** @internal */
         private container: IContainer;
 
     }

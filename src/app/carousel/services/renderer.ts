@@ -4,6 +4,11 @@ module ElectionCarousel {
 
     "use strict";
 
+    /**
+    * @name Renderer
+    * @module ElectionCarousel
+    * @description
+    */
     export class Renderer implements IRenderer {
         
         constructor(private $compile: ng.ICompileService,
@@ -67,13 +72,15 @@ module ElectionCarousel {
             if (!this.hasRendered) this.initialRender();
         }
 
-        public reRender = () => {
+        /** @internal */
+        private reRender = () => {
             this.translateX(this.container.htmlElement, 0);
             if (!this.scope.$$phase)
                 this.scope.$digest();    
         }
 
-        public renderNext = () => {
+        /** @internal */
+        private renderNext = () => {
             if (!this.inTransition) {
 
                 this.inTransition = true;
@@ -90,7 +97,8 @@ module ElectionCarousel {
 
         }
 
-        renderPrevious = () => {
+        /** @internal */
+        private renderPrevious = () => {
             if (!this.inTransition) {
 
                 this.inTransition = true;
@@ -105,7 +113,8 @@ module ElectionCarousel {
             }
         }
 
-        public initialRender = () => {
+        /** @internal */
+        private initialRender = () => {
             var fragment = document.createDocumentFragment();
             for (var i = 0; i < this.items.length; i++) {
                 var childScope: any = this.scope.$new(true);

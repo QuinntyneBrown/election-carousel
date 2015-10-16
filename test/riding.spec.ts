@@ -2,6 +2,8 @@
 
 module ElectionCarousel {
 
+    "use strict";
+
     describe("riding", () => {
 
         var riding:IRiding;

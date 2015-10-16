@@ -4,6 +4,12 @@ module ElectionCarousel {
 
     "use strict";
 
+    /**
+    * @name Navigation
+    * @module ElectionCarousel
+    * @description
+    * Component to expose next and previous buttons (in mobile)
+    */
     export class Navigation {
         
         constructor(private $compile:ng.ICompileService) { }

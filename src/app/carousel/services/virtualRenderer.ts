@@ -4,6 +4,11 @@ module ElectionCarousel {
 
     "use strict";
 
+    /**
+    * @name VirtualRenderer
+    * @module ElectionCarousel
+    * @description
+    */
     export class VirtualRenderer implements IRenderer {
 
         constructor(private $compile: ng.ICompileService,

@@ -1,10 +1,15 @@
 ﻿/// <reference path="../../../../typings/typescriptapp.d.ts" />
-/// <reference path="../../../../typings/typescriptapp.d.ts" />
 
 module ElectionCarousel {
 
     "use strict";
 
+    /**
+    * @name Container
+    * @module ElectionCarousel
+    * @description
+    * Responsible for providing an api for managing the container div for the slides
+    */
     export class Container implements IContainer {
         constructor() { }
 
@@ -16,6 +21,7 @@ module ElectionCarousel {
             return instance;
         }
 
+        /** @internal */
         private _augmentedJQuery: ng.IAugmentedJQuery;
 
         public get augmentedJQuery() { return this._augmentedJQuery; }

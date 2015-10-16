@@ -2,7 +2,22 @@
 /// <reference path="../../../../../typings/typescriptapp.d.ts" />
 
 module ElectionCarousel {
-    
+
+    "use strict";
+
+    /**
+    * @name Carousel
+    * @module ElectionCarousel
+    * @description
+    * Responsible for rendering a carousel using the inner html as a slide template
+    * The slide can access the viewPort and container from the scope
+    * 
+    * ```
+    * <ANY carousel="riding in vm.ridings"  class="riding-slide" data-ng-style="{ width: viewPort.width }">
+    *   <h1>Slide Content</h1>
+    * </ANY>
+    * ```
+    */
     export class Carousel {
 
         constructor(private $interval: ng.IIntervalService, private getHtml: IGetHtmlFn, private renderer: IRenderer) { }

@@ -4,6 +4,11 @@ module ElectionCarousel {
 
     "use strict";
 
+    /**
+    * @name ViewPort
+    * @module ElectionCarousel
+    * @description
+    */
     export class ViewPort {
         constructor(private $compile:ng.ICompileService) { }
 
