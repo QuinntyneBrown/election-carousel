@@ -77,84 +77,6 @@ var ElectionCarousel;
 //# sourceMappingURL=election.states.js.map
 
 /// <reference path="../../../../typings/typescriptapp.d.ts" />
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    "use strict";
-    var getHtml = function (who, deep) {
-        if (!who || !who.tagName)
-            return '';
-        var txt, ax, el = document.createElement("div");
-        el.appendChild(who.cloneNode(false));
-        txt = el.innerHTML;
-        if (deep) {
-            ax = txt.indexOf('>') + 1;
-            txt = txt.substring(0, ax) + who.innerHTML + txt.substring(ax);
-        }
-        el = null;
-        return txt;
-    };
-    angular.module("carousel").value("getHtml", getHtml);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=getHtml.js.map
-
-/// <reference path="../../../../typings/typescriptapp.d.ts" />
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    ElectionCarousel.getX = function (element) {
-        var transform = angular.element(element).css("transform");
-        if (transform === "none")
-            return 0;
-        var result = JSON.parse(transform.replace(/^\w+\(/, "[").replace(/\)$/, "]"));
-        return JSON.parse(transform.replace(/^\w+\(/, "[").replace(/\)$/, "]"))[4];
-    };
-    angular.module("carousel").value("getX", ElectionCarousel.getX);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=getX.js.map
-
-/// <reference path="../../../../typings/typescriptapp.d.ts" />
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    ElectionCarousel.isMobile = function () {
-        return window.innerWidth < 768;
-    };
-    angular.module("carousel").value("isMobile", ElectionCarousel.isMobile);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=isMobile.js.map
-
-/// <reference path="../../../../typings/typescriptapp.d.ts" />
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    ElectionCarousel.safeDigest = function (scope) {
-        if (!scope.$$phase && !scope.$root.$$phase)
-            console.log("apply");
-        scope.$apply();
-    };
-    angular.module("carousel").value("safeDigest", ElectionCarousel.safeDigest);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=safeDigest.js.map
-
-/// <reference path="../../../../typings/typescriptapp.d.ts" />
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    ElectionCarousel.translateX = function (element, value) {
-        angular.element(element).css({
-            "-moz-transform": "translateX(" + value + "px)",
-            "-webkit-transform": "translateX(" + value + "px)",
-            "-ms-transform": "translateX(" + value + "px)",
-            "-transform": "translateX(" + value + "px)"
-        });
-        return element;
-    };
-    angular.module("carousel").value("translateX", ElectionCarousel.translateX);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=translateX.js.map
-
-/// <reference path="../../../../typings/typescriptapp.d.ts" />
 /// <reference path="../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
 (function (ElectionCarousel) {
@@ -634,6 +556,84 @@ var ElectionCarousel;
 var ElectionCarousel;
 (function (ElectionCarousel) {
     "use strict";
+    var getHtml = function (who, deep) {
+        if (!who || !who.tagName)
+            return '';
+        var txt, ax, el = document.createElement("div");
+        el.appendChild(who.cloneNode(false));
+        txt = el.innerHTML;
+        if (deep) {
+            ax = txt.indexOf('>') + 1;
+            txt = txt.substring(0, ax) + who.innerHTML + txt.substring(ax);
+        }
+        el = null;
+        return txt;
+    };
+    angular.module("carousel").value("getHtml", getHtml);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=getHtml.js.map
+
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    ElectionCarousel.getX = function (element) {
+        var transform = angular.element(element).css("transform");
+        if (transform === "none")
+            return 0;
+        var result = JSON.parse(transform.replace(/^\w+\(/, "[").replace(/\)$/, "]"));
+        return JSON.parse(transform.replace(/^\w+\(/, "[").replace(/\)$/, "]"))[4];
+    };
+    angular.module("carousel").value("getX", ElectionCarousel.getX);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=getX.js.map
+
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    ElectionCarousel.isMobile = function () {
+        return window.innerWidth < 768;
+    };
+    angular.module("carousel").value("isMobile", ElectionCarousel.isMobile);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=isMobile.js.map
+
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    ElectionCarousel.safeDigest = function (scope) {
+        if (!scope.$$phase && !scope.$root.$$phase)
+            console.log("apply");
+        scope.$apply();
+    };
+    angular.module("carousel").value("safeDigest", ElectionCarousel.safeDigest);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=safeDigest.js.map
+
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    ElectionCarousel.translateX = function (element, value) {
+        angular.element(element).css({
+            "-moz-transform": "translateX(" + value + "px)",
+            "-webkit-transform": "translateX(" + value + "px)",
+            "-ms-transform": "translateX(" + value + "px)",
+            "-transform": "translateX(" + value + "px)"
+        });
+        return element;
+    };
+    angular.module("carousel").value("translateX", ElectionCarousel.translateX);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=translateX.js.map
+
+/// <reference path="../../../../typings/typescriptapp.d.ts" />
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
     var RidingsController = (function () {
         function RidingsController(ridings) {
             this.ridings = ridings;
@@ -1064,28 +1064,6 @@ var ElectionCarousel;
 
 //# sourceMappingURL=advertising.js.map
 
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    "use strict";
-    var AppHeader = (function () {
-        function AppHeader() {
-            this.restrict = "E";
-            this.replace = true;
-            this.templateUrl = "src/app/election/directives/appHeader/appHeader.html";
-            this.link = function () {
-            };
-        }
-        AppHeader.createInstance = function () {
-            return new AppHeader();
-        };
-        return AppHeader;
-    })();
-    ElectionCarousel.AppHeader = AppHeader;
-    angular.module("election").directive("appHeader", [AppHeader.createInstance]);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=appHeader.js.map
-
 
 
 //# sourceMappingURL=appFooter.js.map
@@ -1111,28 +1089,6 @@ var ElectionCarousel;
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=appHeroBanner.js.map
-
-var ElectionCarousel;
-(function (ElectionCarousel) {
-    "use strict";
-    var AppNavigation = (function () {
-        function AppNavigation() {
-            this.restrict = "E";
-            this.replace = true;
-            this.templateUrl = "src/app/election/directives/appNavigation/appNavigation.html";
-            this.link = function () {
-            };
-        }
-        AppNavigation.createInstance = function () {
-            return new AppNavigation();
-        };
-        return AppNavigation;
-    })();
-    ElectionCarousel.AppNavigation = AppNavigation;
-    angular.module("election").directive("appNavigation", [AppNavigation.createInstance]);
-})(ElectionCarousel || (ElectionCarousel = {}));
-
-//# sourceMappingURL=appNavigation.js.map
 
 /// <reference path="../../../../../typings/typescriptapp.d.ts" />
 var ElectionCarousel;
@@ -1199,3 +1155,91 @@ var ElectionCarousel;
 })(ElectionCarousel || (ElectionCarousel = {}));
 
 //# sourceMappingURL=candidateList.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var AppHeader = (function () {
+        function AppHeader() {
+            this.restrict = "E";
+            this.replace = true;
+            this.templateUrl = "src/app/election/directives/appHeader/appHeader.html";
+            this.link = function () {
+            };
+        }
+        AppHeader.createInstance = function () {
+            return new AppHeader();
+        };
+        return AppHeader;
+    })();
+    ElectionCarousel.AppHeader = AppHeader;
+    angular.module("election").directive("appHeader", [AppHeader.createInstance]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=appHeader.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var MetaBar = (function () {
+        function MetaBar() {
+            this.restrict = "E";
+            this.replace = true;
+            this.templateUrl = "src/app/election/directives/metaBar/metaBar.html";
+            this.link = function () {
+            };
+        }
+        MetaBar.createInstance = function () {
+            return new MetaBar();
+        };
+        return MetaBar;
+    })();
+    ElectionCarousel.MetaBar = MetaBar;
+    angular.module("election").directive("metaBar", [MetaBar.createInstance]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=metaBar.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var SideBar = (function () {
+        function SideBar() {
+            this.restrict = "E";
+            this.replace = true;
+            this.templateUrl = "src/app/election/directives/sideBar/sideBar.html";
+            this.link = function () {
+            };
+        }
+        SideBar.createInstance = function () {
+            return new SideBar();
+        };
+        return SideBar;
+    })();
+    ElectionCarousel.SideBar = SideBar;
+    angular.module("election").directive("sideBar", [SideBar.createInstance]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=sideBar.js.map
+
+var ElectionCarousel;
+(function (ElectionCarousel) {
+    "use strict";
+    var AppNavigation = (function () {
+        function AppNavigation() {
+            this.restrict = "E";
+            this.replace = true;
+            this.templateUrl = "src/app/election/directives/appNavigation/appNavigation.html";
+            this.link = function () {
+            };
+        }
+        AppNavigation.createInstance = function () {
+            return new AppNavigation();
+        };
+        return AppNavigation;
+    })();
+    ElectionCarousel.AppNavigation = AppNavigation;
+    angular.module("election").directive("appNavigation", [AppNavigation.createInstance]);
+})(ElectionCarousel || (ElectionCarousel = {}));
+
+//# sourceMappingURL=appNavigation.js.map

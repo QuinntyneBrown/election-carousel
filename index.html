@@ -1,39 +1,40 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Election Carousel</title>
+    <head>
+        <title>Election Carousel</title>
     
-    <meta name="viewport"
-          content="user-scalable=no,
-          initial-scale=1,
-          maximum-scale=1,
-          minimum-scale=1,
-          width=device-width,
-          height=device-height,
-          target-densitydpi=device-dpi" />
+        <meta name="viewport"
+              content="user-scalable=no,
+              initial-scale=1,
+              maximum-scale=1,
+              minimum-scale=1,
+              width=device-width,
+              height=device-height,
+              target-densitydpi=device-dpi" />
 
-    <link href="src/app/reset.css" rel="stylesheet" />
-    <link href="src/app/election/electionCarousel.css" rel="stylesheet" />
+        <link href="src/reset.css" rel="stylesheet" />
+        <link href="src/styles.css" rel="stylesheet" />
 
-</head>
-<body data-ng-app="election">
+    </head>
 
-    <div id="app-container">
-        
-        <app-header></app-header>
+    <body data-ng-app="election">
 
-        <div id="main-content" ui-view="">
+        <div id="app-container">
+
+            <app-header></app-header>
+
+            <div id="main-content" ui-view="">
+
+            </div>
 
         </div>
 
-    </div>
 
-
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/angular/angular.min.js"></script>
-    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="node_modules/fastclick/lib/fastclick.js"></script>
-    <script src="dist/electionCarousel.js"></script>
-    <script src="templates.js"></script>
-</body>
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="node_modules/angular/angular.min.js"></script>
+        <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="node_modules/fastclick/lib/fastclick.js"></script>
+        <script src="dist/electionCarousel.js"></script>
+        <script src="templates.js"></script>
+    </body>
 </html>

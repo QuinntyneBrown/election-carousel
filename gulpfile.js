@@ -10,10 +10,15 @@ var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var karma = require('gulp-karma');
 var templateCache = require("gulp-angular-templatecache");
+var typedoc = require("gulp-typedoc");
+var child_process = require("child_process");
 
 var config = new Config();
 
-// ['concat-compiled-ts-tests', 'template-cache', 'less'],
+
+gulp.task("typedoc", function () {
+    child_process.exec("typedoc --out ./docs --target es5 --name election-carousel ./src/");
+});
 
 gulp.task('compile-ts-tests', ['clean-ts'], function () {
     var sourceTsFiles = [config.libraryTypeScriptDefinitions,
@@ -113,4 +118,4 @@ gulp.task('watch', ['concat-compiled-ts'], function () {
     gulp.watch(config.allFiles, ['clean-ts', 'compile-ts', 'concat-compiled-ts', 'compress', 'compile-ts-tests', 'concat-compiled-ts-tests', 'template-cache', 'run-unit-tests']);
 });
 
-gulp.task('default', ['clean-ts', 'compile-ts', 'concat-compiled-ts','compress','compile-ts-tests','concat-compiled-ts-tests', 'template-cache', 'run-unit-tests', 'watch']);
+gulp.task('default', ['clean-ts', 'compile-ts', 'concat-compiled-ts','compress','compile-ts-tests','concat-compiled-ts-tests', 'template-cache', 'run-unit-tests','watch']);
